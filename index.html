@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="大纽约青年人服事 · 邀请与跟进看板">
+<title>大纽约青年人服事</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap">
+<style>
+/* ── tokens ─────────────────────────────────────────────── */
+:root{
+  --ink:#111d2b; --ink-2:#3b4b5e; --soft:#5d6d80; --faint:#8b9aab;
+  --canvas:#eaeef3; --surface:#ffffff; --surface-2:#f5f8fb; --sunken:#e3e9f0;
+  --line:#d9e0e9; --line-2:#c5cfdb;
+  --rail:#132538; --rail-2:#1b3450; --rail-line:rgba(255,255,255,.11);
+  --rail-ink:#ecf1f7; --rail-soft:#9fb2c6;
+  --gold:#c2953f; --gold-soft:#e7c887;
+  --pool:#4a7fc1; --yes:#2f8f6d; --maybe:#c78e1e; --no:#c25563;
+  --pool-bg:#eaf1fa; --yes-bg:#e8f4ef; --maybe-bg:#fbf2de; --no-bg:#fbecee;
+  --shadow:0 1px 2px rgba(17,29,43,.05), 0 8px 24px rgba(17,29,43,.06);
+  --shadow-lift:0 6px 16px rgba(17,29,43,.13), 0 18px 40px rgba(17,29,43,.13);
+  --r:12px;
+  --serif:"Noto Serif SC",Georgia,"Songti SC","Source Han Serif SC",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#e5ecf4; --ink-2:#c3d0de; --soft:#96a7ba; --faint:#71829a;
+    --canvas:#0c141e; --surface:#152131; --surface-2:#1a2836; --sunken:#101a26;
+    --line:#26374b; --line-2:#33475e;
+    --rail:#080f19; --rail-2:#111f31; --rail-line:rgba(255,255,255,.09);
+    --rail-ink:#e7eef6; --rail-soft:#8698ad;
+    --gold:#d7ab63; --gold-soft:#f0d49a;
+    --pool:#6d9fdd; --yes:#45ab86; --maybe:#d9ad4d; --no:#d97b85;
+    --pool-bg:#16273c; --yes-bg:#14312a; --maybe-bg:#312817; --no-bg:#361f24;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.32);
+    --shadow-lift:0 6px 16px rgba(0,0,0,.5), 0 18px 40px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#e5ecf4; --ink-2:#c3d0de; --soft:#96a7ba; --faint:#71829a;
+  --canvas:#0c141e; --surface:#152131; --surface-2:#1a2836; --sunken:#101a26;
+  --line:#26374b; --line-2:#33475e;
+  --rail:#080f19; --rail-2:#111f31; --rail-line:rgba(255,255,255,.09);
+  --rail-ink:#e7eef6; --rail-soft:#8698ad;
+  --gold:#d7ab63; --gold-soft:#f0d49a;
+  --pool:#6d9fdd; --yes:#45ab86; --maybe:#d9ad4d; --no:#d97b85;
+  --pool-bg:#16273c; --yes-bg:#14312a; --maybe-bg:#312817; --no-bg:#361f24;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.32);
+  --shadow-lift:0 6px 16px rgba(0,0,0,.5), 0 18px 40px rgba(0,0,0,.45);
+}
+
+/* The in-page toggle re-declares the tokens on #nyyg-root, so it keeps working
+   even where a host re-stamps data-theme on the document element. */
+#nyyg-root{display:contents}
+#nyyg-root.force-light{
+  --ink:#111d2b; --ink-2:#3b4b5e; --soft:#5d6d80; --faint:#8b9aab;
+  --canvas:#eaeef3; --surface:#ffffff; --surface-2:#f5f8fb; --sunken:#e3e9f0;
+  --line:#d9e0e9; --line-2:#c5cfdb;
+  --rail:#132538; --rail-2:#1b3450; --rail-line:rgba(255,255,255,.11);
+  --rail-ink:#ecf1f7; --rail-soft:#9fb2c6;
+  --gold:#c2953f; --gold-soft:#e7c887;
+  --pool:#4a7fc1; --yes:#2f8f6d; --maybe:#c78e1e; --no:#c25563;
+  --pool-bg:#eaf1fa; --yes-bg:#e8f4ef; --maybe-bg:#fbf2de; --no-bg:#fbecee;
+  --shadow:0 1px 2px rgba(17,29,43,.05), 0 8px 24px rgba(17,29,43,.06);
+  --shadow-lift:0 6px 16px rgba(17,29,43,.13), 0 18px 40px rgba(17,29,43,.13);
+}
+#nyyg-root.force-dark{
+  --ink:#e5ecf4; --ink-2:#c3d0de; --soft:#96a7ba; --faint:#71829a;
+  --canvas:#0c141e; --surface:#152131; --surface-2:#1a2836; --sunken:#101a26;
+  --line:#26374b; --line-2:#33475e;
+  --rail:#080f19; --rail-2:#111f31; --rail-line:rgba(255,255,255,.09);
+  --rail-ink:#e7eef6; --rail-soft:#8698ad;
+  --gold:#d7ab63; --gold-soft:#f0d49a;
+  --pool:#6d9fdd; --yes:#45ab86; --maybe:#d9ad4d; --no:#d97b85;
+  --pool-bg:#16273c; --yes-bg:#14312a; --maybe-bg:#312817; --no-bg:#361f24;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.32);
+  --shadow-lift:0 6px 16px rgba(0,0,0,.5), 0 18px 40px rgba(0,0,0,.45);
+}
+
+/* ── base ───────────────────────────────────────────────── */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:var(--canvas);color:var(--ink);
+  font-family:var(--sans);font-size:14px;line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3,h4{margin:0;font-family:var(--serif);font-weight:600;text-wrap:balance}
+:where(button,a,input,textarea,[tabindex]):focus-visible{outline:2px solid var(--pool);outline-offset:2px;border-radius:6px}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ── shell ──────────────────────────────────────────────── */
+.app{display:grid;grid-template-columns:272px minmax(0,1fr);min-height:100vh}
+
+/* ── rail ───────────────────────────────────────────────── */
+.rail{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:20px;
+  padding:22px 18px 16px;overflow:auto;color:var(--rail-ink);
+  background:linear-gradient(168deg,var(--rail) 0%,var(--rail-2) 100%);
+  border-right:1px solid var(--line)}
+.brand{display:flex;gap:12px;align-items:flex-start}
+.mark{flex:0 0 auto;width:42px;height:42px;display:grid;place-items:center;border-radius:11px;
+  border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);
+  color:var(--gold-soft);font-family:var(--serif);font-size:16px;letter-spacing:.02em}
+.eyebrow{margin:0;font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold-soft)}
+.brand h1{margin-top:3px;font-size:19px;line-height:1.3;letter-spacing:.01em;max-width:150px}
+.rail-toggle{display:none}
+
+.tool{display:flex;flex-direction:column;gap:8px}
+.tool + .tool{padding-top:16px;border-top:1px solid var(--rail-line)}
+.tool-label{margin:0;font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--rail-soft)}
+.field{display:flex}
+.field input{flex:1;min-width:0;min-height:38px;padding:8px 11px;border:1px solid var(--rail-line);
+  border-right:0;border-radius:9px 0 0 9px;background:rgba(255,255,255,.06);color:var(--rail-ink)}
+.field input::placeholder{color:var(--rail-soft)}
+.field input:focus{outline:none;background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.3)}
+.field button{min-height:38px;padding:0 15px;border:1px solid var(--gold);border-radius:0 9px 9px 0;
+  background:var(--gold);color:#16233a;font-size:13px;font-weight:700}
+.field button:hover{filter:brightness(1.08)}
+.rbtn{min-height:36px;padding:8px 12px;text-align:left;border:1px solid var(--rail-line);border-radius:9px;
+  background:rgba(255,255,255,.05);color:var(--rail-ink);font-size:12.5px;
+  transition:background .15s ease,border-color .15s ease}
+.rbtn:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.24)}
+.rbtn.accent{background:rgba(47,143,109,.9);border-color:rgba(47,143,109,.9);color:#fff;font-weight:600}
+.rbtn.accent:hover{filter:brightness(1.07)}
+.rbtn[disabled]{opacity:.4;cursor:not-allowed}
+.rbtn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.linkbtn{align-self:flex-start;padding:2px 0;border:0;background:none;color:var(--rail-soft);
+  font-size:11.5px;text-decoration:underline;text-underline-offset:3px}
+.linkbtn:hover{color:var(--gold-soft)}
+.search{position:relative}
+.search input{width:100%;min-height:36px;padding:8px 30px 8px 11px;border:1px solid var(--rail-line);
+  border-radius:9px;background:rgba(255,255,255,.06);color:var(--rail-ink)}
+.search input::placeholder{color:var(--rail-soft)}
+.search input:focus{outline:none;background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.3)}
+.search .clear{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:24px;height:24px;
+  border:0;border-radius:6px;background:none;color:var(--rail-soft);font-size:14px;line-height:1}
+.bulk{display:none;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--rail-line);
+  border-radius:10px;background:rgba(0,0,0,.18)}
+.bulk.open{display:flex}
+.bulk textarea{min-height:96px;padding:9px 10px;resize:vertical;border:1px solid var(--rail-line);
+  border-radius:8px;background:rgba(255,255,255,.06);color:var(--rail-ink)}
+.bulk textarea:focus{outline:none;border-color:rgba(255,255,255,.3)}
+.hint{margin:0;color:var(--rail-soft);font-size:11px;line-height:1.5}
+.check{display:flex;gap:7px;align-items:center;color:var(--rail-soft);font-size:11.5px}
+.sync-state{display:flex;gap:7px;align-items:center;padding:7px 10px;border-radius:8px;
+  background:rgba(0,0,0,.2);color:var(--rail-soft);font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.02em}
+.sync-state i{flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:var(--faint)}
+.sync-state[data-tone="ok"] i{background:#4ec08f}
+.sync-state[data-tone="busy"] i{background:var(--gold);animation:pulse 1.1s ease-in-out infinite}
+.sync-state[data-tone="off"] i{background:#c25563}
+@keyframes pulse{50%{opacity:.25}}
+.rail-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--rail-line);
+  display:flex;justify-content:space-between;align-items:center;gap:10px}
+.rail-foot a{color:var(--rail-soft);font-size:11.5px;text-decoration:none;border-bottom:1px solid var(--rail-line)}
+.rail-foot a:hover{color:var(--gold-soft)}
+
+/* ── workspace ──────────────────────────────────────────── */
+.work{min-width:0;padding:26px 26px 40px;display:flex;flex-direction:column;gap:18px}
+.work-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.work-head h2{font-size:23px;letter-spacing:.01em}
+.work-head p{margin:4px 0 0;color:var(--soft);font-size:12.5px}
+.tabs{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:11px;
+  background:var(--surface);box-shadow:var(--shadow);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:7px 14px;border:0;border-radius:8px;background:none;color:var(--soft);
+  font-size:12.5px;font-weight:600;white-space:nowrap;transition:background .15s ease,color .15s ease}
+.tab:hover{color:var(--ink);background:var(--surface-2)}
+.tab[aria-selected="true"]{color:var(--surface);background:var(--rail-2)}
+
+/* progress meter */
+.meter{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid var(--line);
+  border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow)}
+.meter-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.meter-total{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--soft);text-transform:uppercase}
+.meter-total b{color:var(--ink);font-size:15px;font-weight:600}
+.meter-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--soft)}
+.meter-legend span{display:inline-flex;gap:6px;align-items:center}
+.meter-legend i{width:8px;height:8px;border-radius:2px}
+.bar{display:flex;height:8px;border-radius:99px;overflow:hidden;background:var(--sunken)}
+.bar div{transition:width .3s ease}
+
+/* board */
+.columns{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
+.col{display:flex;flex-direction:column;min-height:320px;border:1px solid var(--line);
+  border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.col-head{display:flex;align-items:center;gap:9px;padding:12px 13px;border-bottom:1px solid var(--line);
+  background:var(--surface-2)}
+.col-head .stripe{width:3px;align-self:stretch;min-height:16px;border-radius:99px}
+.col-head h3{flex:1;font-family:var(--sans);font-size:13.5px;font-weight:700;letter-spacing:.01em}
+.col-head .n{padding:2px 8px;border-radius:99px;background:var(--sunken);color:var(--soft);
+  font-family:var(--mono);font-size:11px;font-weight:500}
+.col[data-status="pool"] .stripe{background:var(--pool)} .col[data-status="yes"] .stripe{background:var(--yes)}
+.col[data-status="maybe"] .stripe{background:var(--maybe)} .col[data-status="no"] .stripe{background:var(--no)}
+.col[data-status="pool"] .col-head{background:var(--pool-bg)} .col[data-status="yes"] .col-head{background:var(--yes-bg)}
+.col[data-status="maybe"] .col-head{background:var(--maybe-bg)} .col[data-status="no"] .col-head{background:var(--no-bg)}
+.drop{flex:1;display:flex;flex-direction:column;gap:7px;padding:10px;min-height:90px}
+.drop.over{background:var(--surface-2)}
+
+.card{display:flex;align-items:center;gap:6px;padding:8px 8px 8px 5px;border:1px solid var(--line);
+  border-radius:10px;background:var(--surface);box-shadow:0 1px 2px rgba(17,29,43,.04);
+  transition:border-color .15s ease,box-shadow .15s ease,transform .15s ease}
+.card:hover{border-color:var(--line-2);box-shadow:0 3px 10px rgba(17,29,43,.09)}
+.card.ghost{display:none}
+.grip{flex:0 0 auto;width:18px;height:30px;display:grid;place-items:center;border:0;border-radius:6px;
+  background:none;color:var(--faint);cursor:grab;touch-action:none;letter-spacing:-2px;font-size:13px}
+.grip:active{cursor:grabbing}
+.card-name{flex:1;min-width:0;padding:4px 2px;border:0;background:none;text-align:left;
+  font-size:13.5px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-name:hover{color:var(--pool)}
+.notemark{flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.mini{flex:0 0 auto;width:26px;height:26px;display:grid;place-items:center;border:1px solid transparent;
+  border-radius:7px;background:none;color:var(--faint);font-size:12px;line-height:1}
+.mini:hover{color:var(--ink);border-color:var(--line);background:var(--surface-2)}
+.mini svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.slot{height:34px;border:1px dashed var(--line-2);border-radius:10px;background:var(--surface-2)}
+.empty{padding:22px 8px;color:var(--faint);font-size:12px;text-align:center}
+
+.flying{position:fixed;z-index:120;pointer-events:none;box-shadow:var(--shadow-lift);
+  transform:rotate(-1.2deg) scale(1.02);border-color:var(--line-2);background:var(--surface)}
+
+/* group */
+.group{display:flex;flex-direction:column;gap:14px}
+.gcols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gcol{display:flex;flex-direction:column;gap:10px;padding:14px;border:1px solid var(--line);
+  border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow)}
+.gcol h4{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:13px;font-weight:700}
+.gcol h4::before{content:"";width:7px;height:7px;border-radius:50%}
+.gcol[data-cat="member"] h4::before{background:var(--yes)}
+.gcol[data-cat="baptism"] h4::before{background:var(--pool)}
+.gcol[data-cat="friend"] h4::before{background:var(--gold)}
+.gcol h4 .n{margin-left:auto;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--soft)}
+.gdrop{display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;min-height:64px;padding:2px;border-radius:8px}
+.gdrop.over{background:var(--surface-2);outline:1px dashed var(--line-2);outline-offset:2px}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border:1px solid var(--line);
+  border-radius:99px;background:var(--surface-2);font-size:12.5px;font-weight:600;
+  touch-action:manipulation;cursor:grab;user-select:none;-webkit-user-select:none}
+.tag:active{cursor:grabbing}
+.tag.ghost{opacity:.34}
+.tag .from{font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.06em;color:var(--faint)}
+.gcol[data-cat="member"] .tag{color:var(--yes);border-color:color-mix(in srgb,var(--yes) 30%,transparent);background:var(--yes-bg)}
+.gcol[data-cat="baptism"] .tag{color:var(--pool);border-color:color-mix(in srgb,var(--pool) 30%,transparent);background:var(--pool-bg)}
+.gcol[data-cat="friend"] .tag{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 32%,transparent);background:var(--maybe-bg)}
+
+/* notice */
+.notice{display:flex;flex-direction:column;gap:14px;max-width:760px}
+.compose{display:flex;flex-direction:column;gap:9px;padding:14px;border:1px solid var(--line);
+  border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow)}
+.compose textarea{min-height:74px;padding:10px 12px;resize:vertical;border:1px solid var(--line);
+  border-radius:9px;background:var(--surface-2);color:var(--ink)}
+.compose textarea:focus{outline:none;border-color:var(--pool);background:var(--surface)}
+.compose-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.notes{display:flex;flex-direction:column;gap:10px}
+.note{padding:13px 15px;border:1px solid var(--line);border-left:3px solid var(--gold);
+  border-radius:3px 10px 10px 3px;background:var(--surface);box-shadow:var(--shadow)}
+.note p{margin:0;font-size:13px;line-height:1.72;white-space:pre-wrap;overflow-wrap:anywhere}
+.note-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:9px}
+.note-meta time{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.note-meta .acts{display:flex;gap:6px}
+
+.btn{padding:8px 14px;border:1px solid var(--line);border-radius:9px;background:var(--surface);
+  color:var(--ink-2);font-size:12.5px;font-weight:600;transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--line-2);background:var(--surface-2)}
+.btn.primary{border-color:var(--rail-2);background:var(--rail-2);color:#fff}
+.btn.primary:hover{filter:brightness(1.15)}
+.btn.danger{margin-right:auto;color:var(--no);border-color:color-mix(in srgb,var(--no) 35%,transparent)}
+.btn.danger:hover{background:var(--no-bg)}
+.btn.tiny{padding:4px 9px;font-size:11px;font-weight:500}
+
+.foot{margin-top:auto;padding-top:8px;color:var(--faint);font-size:11px;font-family:var(--mono);
+  letter-spacing:.04em;text-align:center}
+
+/* views */
+[data-view]{display:none}
+[data-view].on{display:flex;flex-direction:column;gap:16px}
+
+/* menu */
+.menu{position:fixed;z-index:130;min-width:158px;padding:5px;border:1px solid var(--line);
+  border-radius:11px;background:var(--surface);box-shadow:var(--shadow-lift)}
+.menu button{display:flex;width:100%;gap:9px;align-items:center;padding:8px 10px;border:0;border-radius:7px;
+  background:none;font-size:12.5px;text-align:left}
+.menu button:hover{background:var(--surface-2)}
+.menu button i{width:8px;height:8px;border-radius:2px;flex:0 0 auto}
+.menu hr{margin:4px 6px;border:0;border-top:1px solid var(--line)}
+
+/* dialog */
+dialog{width:min(460px,calc(100% - 28px));padding:0;border:1px solid var(--line);border-radius:16px;
+  background:var(--surface);color:var(--ink);box-shadow:var(--shadow-lift)}
+dialog::backdrop{background:rgba(8,15,25,.55)}
+dialog form,.dlg-body{padding:20px}
+dialog h2{font-size:19px}
+dialog .sub{margin:4px 0 16px;color:var(--soft);font-size:12px}
+dialog label{display:block;margin:12px 0 6px;color:var(--ink-2);font-family:var(--mono);
+  font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+dialog input[type=text],dialog input[type=url],dialog textarea{width:100%;padding:9px 11px;
+  border:1px solid var(--line);border-radius:9px;background:var(--surface-2);color:var(--ink)}
+dialog textarea{min-height:130px;resize:vertical}
+dialog input:focus,dialog textarea:focus{outline:none;border-color:var(--pool);background:var(--surface)}
+dialog input[readonly],dialog textarea[readonly]{background:var(--sunken);color:var(--ink-2)}
+.dlg-acts{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+.btn.solid-danger{color:#fff;border-color:var(--no);background:var(--no)}
+.btn.solid-danger:hover{filter:brightness(1.08);background:var(--no)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:22px;z-index:140;transform:translate(-50%,14px);
+  display:flex;gap:14px;align-items:center;padding:11px 14px;border:1px solid var(--line);
+  border-radius:11px;background:var(--surface);box-shadow:var(--shadow-lift);font-size:12.5px;
+  opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+.toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast button{border:0;background:none;color:var(--pool);font-size:12.5px;font-weight:700}
+
+/* responsive */
+@media(max-width:1080px){ .columns{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .rail{position:static;height:auto;gap:14px;padding:14px 16px}
+  .rail-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .rail-toggle{display:inline-flex;gap:7px;align-items:center;padding:7px 12px;border:1px solid var(--rail-line);
+    border-radius:9px;background:rgba(255,255,255,.06);color:var(--rail-ink);font-size:12px;font-weight:600}
+  .rail-body{display:none;flex-direction:column;gap:16px}
+  .rail-body.open{display:flex}
+  .rail-foot{margin-top:4px}
+  .work{padding:16px 14px 32px}
+  .work-head h2{font-size:20px}
+  .columns{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding-bottom:6px;margin:0 -14px;padding-left:14px;padding-right:14px;scrollbar-width:thin}
+  .col{flex:0 0 min(78%,300px);scroll-snap-align:center;min-height:260px}
+  .gcols{grid-template-columns:1fr}
+  .meter-legend{gap:10px;font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="nyyg-root">
+<div class="app">
+
+<aside class="rail">
+  <div class="rail-head">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">NY</div>
+      <div>
+        <p class="eyebrow">New York Young Gospel</p>
+        <h1>大纽约<br>青年人服事</h1>
+      </div>
+    </div>
+    <button class="rail-toggle" id="railToggle" aria-expanded="false" aria-controls="railBody">工具</button>
+  </div>
+
+  <div class="rail-body" id="railBody">
+    <section class="tool">
+      <p class="tool-label">添加名单</p>
+      <div class="field">
+        <input id="newName" type="text" placeholder="输入姓名…" autocomplete="off" aria-label="姓名">
+        <button id="addBtn">添加</button>
+      </div>
+      <button class="rbtn" id="bulkToggle" aria-expanded="false" aria-controls="bulkBox">批量添加…</button>
+      <div class="bulk" id="bulkBox">
+        <p class="hint">每行一个姓名，也可用逗号、顿号或分号分隔。</p>
+        <textarea id="bulkInput" placeholder="张三&#10;李四&#10;王五" aria-label="批量姓名"></textarea>
+        <label class="check"><input id="allowDup" type="checkbox"> 允许重名</label>
+        <button class="rbtn accent" id="bulkAdd">加入「邀请」</button>
+      </div>
+    </section>
+
+    <section class="tool">
+      <p class="tool-label">查找</p>
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="搜索姓名或备注…" aria-label="搜索">
+        <button class="clear" id="searchClear" aria-label="清除搜索" hidden>×</button>
+      </div>
+    </section>
+
+    <section class="tool">
+      <p class="tool-label">Google Sheet</p>
+      <div class="sync-state" id="syncState" data-tone="busy"><i></i><span>正在连接…</span></div>
+      <button class="rbtn accent" id="syncUp">同步到云端</button>
+      <button class="rbtn" id="syncDown">从云端读取</button>
+      <button class="linkbtn" id="syncSetup">同步设置</button>
+    </section>
+
+    <section class="tool">
+      <p class="tool-label">文件与分享</p>
+      <button class="rbtn" id="pngBtn">导出图片 (PNG)</button>
+      <div class="rbtn-row">
+        <button class="rbtn" id="exportBtn">导出数据</button>
+        <button class="rbtn" id="importBtn">导入数据</button>
+      </div>
+      <input id="importFile" type="file" accept=".json,application/json" hidden>
+    </section>
+  </div>
+
+  <div class="rail-foot">
+    <a href="https://docs.google.com/spreadsheets/d/15uMfJDmleLfw2-2PaLVU_8a-zSGn7-T8qbXu_082VXs/edit?usp=sharing" target="_blank" rel="noopener noreferrer">打开 Google Sheet ↗</a>
+    <button class="linkbtn" id="themeBtn" aria-label="切换深浅色">◐</button>
+  </div>
+</aside>
+
+<main class="work">
+  <div class="work-head">
+    <div>
+      <p class="eyebrow" style="color:var(--faint)">People Care Board</p>
+      <h2 id="viewTitle">跟进中心</h2>
+      <p id="viewDesc">拖动姓名更新进度，点姓名查看个人备注。</p>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="工作区视图">
+      <button class="tab" role="tab" data-target="board" aria-selected="true">主名单</button>
+      <button class="tab" role="tab" data-target="fall2026" aria-selected="false">2026 Fall 开学季</button>
+      <button class="tab" role="tab" data-target="group" aria-selected="false">身份分组</button>
+      <button class="tab" role="tab" data-target="notice" aria-selected="false">公告</button>
+    </nav>
+  </div>
+
+  <!-- 看板（主名单 / 开学季共用） -->
+  <section data-view="board" class="on" id="boardView">
+    <div class="meter">
+      <div class="meter-top">
+        <span class="meter-total tnum">名单共 <b id="mTotal">0</b> 人</span>
+        <div class="meter-legend" id="mLegend"></div>
+      </div>
+      <div class="bar" id="mBar"></div>
+    </div>
+    <div class="columns" id="columns"></div>
+  </section>
+
+  <!-- 身份分组 -->
+  <section data-view="group" id="groupView">
+    <div class="group">
+      <div class="gcols" id="gcols"></div>
+      <p class="hint" style="color:var(--soft)">新增的人默认进入「福音朋友」。分组同时包含主名单与开学季名单，标注 <span class="from" style="font-family:var(--mono)">FALL</span> 的来自开学季。</p>
+    </div>
+  </section>
+
+  <!-- 公告 -->
+  <section data-view="notice" id="noticeView">
+    <div class="notice">
+      <div class="compose">
+        <textarea id="noticeInput" placeholder="写一条新公告…聚会安排、代祷事项、服事提醒。"></textarea>
+        <div class="compose-row">
+          <span class="hint" style="color:var(--faint)">⌘/Ctrl + Enter 发布</span>
+          <button class="btn primary" id="noticeAdd">发布公告</button>
+        </div>
+      </div>
+      <div class="notes" id="notes"></div>
+    </div>
+  </section>
+
+  <p class="foot" id="foot">本地保存 · 可同步 Google Sheet</p>
+</main>
+</div>
+
+<dialog id="personDlg">
+  <form method="dialog">
+    <h2 id="dlgTitle">详情</h2>
+    <p class="sub" id="dlgSub">查看详细信息。</p>
+    <label for="dlgName">姓名</label>
+    <input id="dlgName" type="text" autocomplete="off">
+    <label for="dlgNote">备注</label>
+    <textarea id="dlgNote" placeholder="记录联系方式、邀请进度或其他信息…"></textarea>
+    <div class="dlg-acts">
+      <button type="button" class="btn danger" id="dlgDelete">删除</button>
+      <button type="button" class="btn" id="dlgCancel">关闭</button>
+      <button type="submit" class="btn primary" id="dlgSave" value="save">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="syncDlg">
+  <form method="dialog">
+    <h2>同步设置</h2>
+    <p class="sub">粘贴部署为 Web App 的 Google Apps Script 地址。留空则恢复默认地址。</p>
+    <label for="syncUrl">Apps Script Web App URL</label>
+    <input id="syncUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec">
+    <p class="sub" style="margin:16px 0 0">清空本机数据只影响这台设备的浏览器，不会改动 Google Sheet 上的名单。</p>
+    <div class="dlg-acts">
+      <button type="button" class="btn danger" id="wipeLocal">清空本机数据</button>
+      <button type="button" class="btn" id="syncReset">恢复默认地址</button>
+      <button type="button" class="btn" id="syncCancel">取消</button>
+      <button type="submit" class="btn primary" value="save">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="askDlg">
+  <div class="dlg-body">
+    <h2 id="askTitle">确认</h2>
+    <p class="sub" id="askMsg"></p>
+    <textarea id="askInput" hidden></textarea>
+    <div class="dlg-acts">
+      <button type="button" class="btn" id="askNo">取消</button>
+      <button type="button" class="btn primary" id="askYes">确定</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button id="toastAct" hidden>撤销</button></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+
+/* ── constants ─────────────────────────────────────────── */
+const KEY='invite_manager_v2';
+const URL_KEY='invite_manager_google_script_url';
+const THEME_KEY='invite_manager_theme';
+const DEFAULT_URL='https://script.google.com/macros/s/AKfycbyMFQf63WaCWHGHMFWNIwab7Qda0cGupq4Q3upB5hS3ake43Xpe3K3Wkqka2vGh6Q-gTw/exec';
+const ST=['pool','yes','maybe','no'];
+const ST_LABEL={pool:'邀请',yes:'确定',maybe:'待定',no:'不来'};
+const CATS=['member','baptism','friend'];
+const CAT_LABEL={member:'弟兄姊妹',baptism:'预备受浸',friend:'福音朋友'};
+const VIEWS={
+  board:['跟进中心','拖动姓名更新进度，点姓名查看个人备注。'],
+  fall2026:['2026 Fall 开学季','独立的开学季福音名单，与主名单分开统计。'],
+  group:['身份分组','在弟兄姊妹、预备受浸与福音朋友之间拖动姓名。'],
+  notice:['公告','发布聚会安排、代祷事项与服事提醒。']
+};
+
+let view='board';            // board | fall2026 | group | notice
+let listKey='main';          // main | fall2026
+let query='';
+let editingId=null, editingList='main';
+
+/* ── state ─────────────────────────────────────────────── */
+function emptyList(){return{people:[],statuses:{},order:{pool:[],yes:[],maybe:[],no:[]},personNotes:{}}}
+function blank(){return{people:[],statuses:{},history:[],order:{pool:[],yes:[],maybe:[],no:[]},
+  bottomTypes:{},bottomOrder:{member:[],baptism:[],friend:[]},personNotes:{},
+  deletedPeople:{main:[],fall2026:[]},campaigns:{fall2026:emptyList()},notices:[]}}
+
+function listOf(s,key=listKey){
+  if(key==='main')return s;
+  s.campaigns=s.campaigns||{};
+  s.campaigns[key]=s.campaigns[key]||emptyList();
+  return s.campaigns[key];
+}
+
+function load(){
+  let s;
+  try{s=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){s=null}
+  if(!s||typeof s!=='object'){s=blank();localStorage.setItem(KEY,JSON.stringify(s));return s}
+  const d=blank();
+  for(const k of Object.keys(d)) if(s[k]==null) s[k]=d[k];
+  if(!Array.isArray(s.people))s.people=[];
+  if(!Array.isArray(s.history))s.history=[];
+  if(!Array.isArray(s.notices))s.notices=[];
+  if(!s.campaigns.fall2026)s.campaigns.fall2026=emptyList();
+  const fall=s.campaigns.fall2026;
+  if(!Array.isArray(fall.people))fall.people=[];
+  fall.statuses=fall.statuses||{}; fall.personNotes=fall.personNotes||{};
+  fall.order=fall.order||{pool:[],yes:[],maybe:[],no:[]};
+  for(const st of ST){ s.order[st]=s.order[st]||[]; fall.order[st]=fall.order[st]||[]; }
+  for(const c of CATS) s.bottomOrder[c]=s.bottomOrder[c]||[];
+  s.deletedPeople.main=s.deletedPeople.main||[]; s.deletedPeople.fall2026=s.deletedPeople.fall2026||[];
+
+  // repair: category map covers every person, orphans dropped
+  const all=s.people.concat(fall.people);
+  const valid=new Set(all.map(p=>p.id));
+  for(const id of Object.keys(s.bottomTypes)) if(!valid.has(id)) delete s.bottomTypes[id];
+  for(const p of all) if(!CATS.includes(s.bottomTypes[p.id])) s.bottomTypes[p.id]='friend';
+
+  // repair: column order matches actual statuses
+  const fix=(data)=>{
+    const ids=new Set(data.people.map(p=>p.id));
+    const by={pool:[],yes:[],maybe:[],no:[]};
+    for(const p of data.people){ const st=ST.includes(data.statuses[p.id])?data.statuses[p.id]:'pool';
+      data.statuses[p.id]=st; by[st].push(p.id); }
+    for(const st of ST){
+      data.order[st]=[...new Set(data.order[st])].filter(id=>ids.has(id)&&by[st].includes(id));
+      for(const id of by[st]) if(!data.order[st].includes(id)) data.order[st].push(id);
+    }
+  };
+  fix(s); fix(fall);
+
+  // repair: group order
+  for(const c of CATS)
+    s.bottomOrder[c]=[...new Set(s.bottomOrder[c])].filter(id=>valid.has(id)&&s.bottomTypes[id]===c);
+  for(const p of all){ const c=s.bottomTypes[p.id]; if(!s.bottomOrder[c].includes(p.id)) s.bottomOrder[c].push(p.id); }
+  return s;
+}
+
+let revision=0, dirty=false, autoSync=false, syncTimer=null, cloudOn=true;
+function save(s){
+  localStorage.setItem(KEY,JSON.stringify(s));
+  revision++;
+  if(autoSync&&cloudOn){ dirty=true; clearTimeout(syncTimer);
+    setSync('busy','等待同步…'); syncTimer=setTimeout(()=>pushCloud(true),800); }
+}
+const clean=n=>(n||'').trim().replace(/\s+/g,' ');
+const newId=()=>'p_'+Math.random().toString(36).slice(2,10);
+const esc=s=>(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ── mutations ─────────────────────────────────────────── */
+function addPeople(names,allowDup){
+  const s=load(), d=listOf(s), added=[];
+  const seen=new Set(d.people.map(p=>clean(p.name).toLowerCase()));
+  for(const raw of names){
+    const nm=clean(raw); if(!nm) continue;
+    if(!allowDup&&seen.has(nm.toLowerCase())) continue;
+    seen.add(nm.toLowerCase());
+    const id=newId();
+    d.people.push({id,name:nm});
+    d.statuses[id]='pool';
+    s.bottomTypes[id]='friend';
+    s.bottomOrder.friend.unshift(id);
+    added.push(id);
+  }
+  if(!added.length) return 0;
+  d.order.pool=added.concat(d.order.pool.filter(x=>!added.includes(x)));
+  save(s); paint();
+  return added.length;
+}
+
+function removePerson(id,key){
+  const s=load(), d=listOf(s,key);
+  s.deletedPeople[key]=s.deletedPeople[key]||[];
+  if(!s.deletedPeople[key].includes(id)) s.deletedPeople[key].push(id);
+  d.people=d.people.filter(p=>p.id!==id);
+  delete d.statuses[id]; delete d.personNotes[id];
+  for(const st of ST) d.order[st]=d.order[st].filter(x=>x!==id);
+  delete s.bottomTypes[id];
+  for(const c of CATS) s.bottomOrder[c]=s.bottomOrder[c].filter(x=>x!==id);
+  save(s); paint();
+}
+
+function moveCard(id,status,beforeId){
+  const s=load(), d=listOf(s);
+  if(!d.people.some(p=>p.id===id)) return;
+  for(const st of ST) d.order[st]=d.order[st].filter(x=>x!==id);
+  d.statuses[id]=status;
+  const arr=d.order[status];
+  const i=beforeId?arr.indexOf(beforeId):-1;
+  if(i>=0) arr.splice(i,0,id); else arr.push(id);
+  save(s); paint();
+}
+
+function moveTag(id,cat,beforeId){
+  const s=load();
+  for(const c of CATS) s.bottomOrder[c]=s.bottomOrder[c].filter(x=>x!==id);
+  s.bottomTypes[id]=cat;
+  const arr=s.bottomOrder[cat];
+  const i=beforeId?arr.indexOf(beforeId):-1;
+  if(i>=0) arr.splice(i,0,id); else arr.push(id);
+  save(s); paint();
+}
+
+/* ── render ────────────────────────────────────────────── */
+const matches=(p,note)=>!query||((p.name||'')+' '+(note||'')).toLowerCase().includes(query);
+
+function paint(){
+  const s=load();
+  $('#viewTitle').textContent=VIEWS[view][0];
+  $('#viewDesc').textContent=VIEWS[view][1];
+  $('#newName').placeholder = listKey==='fall2026'?'添加到开学季…':'输入姓名…';
+  $('#boardView').classList.toggle('on', view==='board'||view==='fall2026');
+  $('#groupView').classList.toggle('on', view==='group');
+  $('#noticeView').classList.toggle('on', view==='notice');
+  if(view==='board'||view==='fall2026') paintBoard(s);
+  if(view==='group') paintGroup(s);
+  if(view==='notice') paintNotices(s);
+}
+
+function paintBoard(s){
+  const d=listOf(s), wrap=$('#columns'), notes=d.personNotes||{};
+  const id2p={}; for(const p of d.people) id2p[p.id]=p;
+  wrap.innerHTML='';
+  const counts={};
+  for(const st of ST){
+    const ids=d.order[st].filter(id=>id2p[id]);
+    const shown=ids.filter(id=>matches(id2p[id],notes[id]));
+    counts[st]=ids.length;
+    const col=document.createElement('section');
+    col.className='col'; col.dataset.status=st;
+    col.innerHTML=`<div class="col-head"><span class="stripe"></span><h3>${ST_LABEL[st]}</h3>
+      <span class="n tnum">${query?shown.length+'/'+ids.length:ids.length}</span></div>
+      <div class="drop" data-status="${st}"></div>`;
+    const drop=col.querySelector('.drop');
+    if(!shown.length){
+      const e=document.createElement('p'); e.className='empty';
+      e.textContent=query?'没有匹配的姓名':'把姓名拖到这里';
+      drop.appendChild(e);
+    } else for(const id of shown) drop.appendChild(cardEl(id2p[id],!!notes[id]));
+    wrap.appendChild(col);
+  }
+  const total=d.people.length;
+  $('#mTotal').textContent=total;
+  const bar=$('#mBar'), leg=$('#mLegend');
+  bar.innerHTML=''; leg.innerHTML='';
+  for(const st of ST){
+    const pct=total?(counts[st]/total*100):0;
+    const seg=document.createElement('div');
+    seg.style.width=(total?pct:(st==='pool'?100:0))+'%';
+    seg.style.background=total?`var(--${st})`:'transparent';
+    seg.title=`${ST_LABEL[st]} ${counts[st]}`;
+    bar.appendChild(seg);
+    const l=document.createElement('span');
+    l.innerHTML=`<i style="background:var(--${st})"></i>${ST_LABEL[st]} <b class="tnum" style="color:var(--ink)">${counts[st]}</b>`;
+    leg.appendChild(l);
+  }
+}
+
+function cardEl(p,hasNote){
+  const el=document.createElement('article');
+  el.className='card'; el.dataset.id=p.id;
+  el.innerHTML=`<button class="grip" data-act="drag" aria-label="拖动 ${esc(p.name)}" tabindex="-1">⋮⋮</button>
+    <button class="card-name" data-act="detail">${esc(p.name)}</button>
+    ${hasNote?'<span class="notemark" title="有备注"></span>':''}
+    <button class="mini" data-act="move" aria-label="移动 ${esc(p.name)}"><svg viewBox="0 0 24 24"><path d="M4 8h13m0 0-3-3m3 3-3 3M20 16H7m0 0 3-3m-3 3 3 3"/></svg></button>
+    <button class="mini" data-act="edit" aria-label="编辑 ${esc(p.name)}"><svg viewBox="0 0 24 24"><path d="M4 20h4l10-10a2.8 2.8 0 0 0-4-4L4 16v4Z"/></svg></button>`;
+  return el;
+}
+
+function paintGroup(s){
+  const fall=s.campaigns.fall2026;
+  const fallIds=new Set(fall.people.map(p=>p.id));
+  const id2p={}; for(const p of s.people.concat(fall.people)) id2p[p.id]=p;
+  const notes=Object.assign({},s.personNotes,fall.personNotes);
+  const wrap=$('#gcols'); wrap.innerHTML='';
+  for(const c of CATS){
+    const ids=s.bottomOrder[c].filter(id=>id2p[id]);
+    const shown=ids.filter(id=>matches(id2p[id],notes[id]));
+    const col=document.createElement('div');
+    col.className='gcol'; col.dataset.cat=c;
+    col.innerHTML=`<h4>${CAT_LABEL[c]}<span class="n tnum">${query?shown.length+'/'+ids.length:ids.length}</span></h4>
+      <div class="gdrop" data-cat="${c}"></div>`;
+    const drop=col.querySelector('.gdrop');
+    if(!shown.length){
+      const e=document.createElement('p'); e.className='empty';
+      e.textContent=query?'没有匹配的姓名':'把姓名拖到这里';
+      drop.appendChild(e);
+    } else for(const id of shown){
+      const t=document.createElement('div');
+      t.className='tag'; t.dataset.id=id; t.tabIndex=0;
+      t.innerHTML=esc(id2p[id].name)+(fallIds.has(id)?' <span class="from">FALL</span>':'');
+      drop.appendChild(t);
+    }
+    wrap.appendChild(col);
+  }
+}
+
+function paintNotices(s){
+  const box=$('#notes'); box.innerHTML='';
+  const list=s.notices.slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
+  if(!list.length){ box.innerHTML='<p class="empty">还没有公告。写下第一条吧。</p>'; return; }
+  for(const n of list){
+    const el=document.createElement('article');
+    el.className='note'; el.dataset.id=n.id;
+    const when=n.createdAt?new Date(n.createdAt):null;
+    el.innerHTML=`<p>${esc(n.text)}</p><div class="note-meta">
+      <time>${when&&!isNaN(when)?when.toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):''}</time>
+      <span class="acts"><button class="btn tiny" data-act="edit">编辑</button>
+      <button class="btn tiny" data-act="del">删除</button></span></div>`;
+    box.appendChild(el);
+  }
+}
+
+/* ── drag & drop (pointer based — works on touch) ──────── */
+let drag=null, suppressClick=false;
+
+function startDrag(el,e,kind){
+  const r=el.getBoundingClientRect();
+  const fly=el.cloneNode(true);
+  fly.classList.add('flying');
+  fly.style.width=r.width+'px'; fly.style.height=r.height+'px';
+  fly.style.left=r.left+'px'; fly.style.top=r.top+'px';
+  document.body.appendChild(fly);
+  el.classList.add('ghost');
+  const slot=document.createElement('div');
+  slot.className='slot';
+  if(kind==='card') el.after(slot);
+  drag={el,fly,slot,kind,dx:e.clientX-r.left,dy:e.clientY-r.top,id:el.dataset.id,moved:false};
+  document.body.style.userSelect='none';
+}
+
+function overDrag(e){
+  if(!drag) return;
+  drag.moved=true;
+  drag.fly.style.left=(e.clientX-drag.dx)+'px';
+  drag.fly.style.top=(e.clientY-drag.dy)+'px';
+  drag.fly.style.display='none';
+  const under=document.elementFromPoint(e.clientX,e.clientY);
+  drag.fly.style.display='';
+  const zone=under&&under.closest(drag.kind==='card'?'.drop':'.gdrop');
+  $$('.drop.over,.gdrop.over').forEach(z=>z.classList.remove('over'));
+  if(!zone) return;
+  zone.classList.add('over');
+  const sel=drag.kind==='card'?'.card:not(.ghost)':'.tag:not(.ghost)';
+  const sibs=$$(sel,zone);
+  let before=null;
+  for(const sib of sibs){
+    const b=sib.getBoundingClientRect();
+    const mid=drag.kind==='card'?b.top+b.height/2:b.left+b.width/2;
+    const pos=drag.kind==='card'?e.clientY:e.clientX;
+    if(pos<mid){ before=sib; break; }
+  }
+  const empty=zone.querySelector('.empty'); if(empty) empty.remove();
+  if(drag.kind==='card'){
+    if(before) zone.insertBefore(drag.slot,before); else zone.appendChild(drag.slot);
+    drag.zone=zone; drag.before=before?before.dataset.id:null;
+  }else{
+    if(before) zone.insertBefore(drag.el,before); else zone.appendChild(drag.el);
+    drag.zone=zone; drag.before=before?before.dataset.id:null;
+  }
+  // edge autoscroll for the mobile column carousel
+  const cols=$('#columns');
+  if(cols&&cols.scrollWidth>cols.clientWidth){
+    const cb=cols.getBoundingClientRect();
+    if(e.clientX>cb.right-46) cols.scrollLeft+=14;
+    else if(e.clientX<cb.left+46) cols.scrollLeft-=14;
+  }
+}
+
+function endDrag(){
+  if(!drag) return;
+  const d=drag; drag=null;
+  d.fly.remove(); d.slot.remove(); d.el.classList.remove('ghost');
+  $$('.drop.over,.gdrop.over').forEach(z=>z.classList.remove('over'));
+  document.body.style.userSelect='';
+  if(d.moved){ suppressClick=true; setTimeout(()=>{suppressClick=false;},0); }
+  if(!d.moved||!d.zone){ paint(); return; }
+  if(d.kind==='card') moveCard(d.id,d.zone.dataset.status,d.before);
+  else moveTag(d.id,d.zone.dataset.cat,d.before);
+}
+
+let press=null;
+document.addEventListener('pointerdown',e=>{
+  if(e.button!==undefined&&e.button!==0) return;
+  const tag=e.target.closest('.tag');
+  const card=e.target.closest('.card');
+  const grip=e.target.closest('.grip');
+  const el=tag||card;
+  if(!el) return;
+  if(card&&!grip&&e.pointerType!=='mouse') return;      // touch: cards move via the grip
+  if(card&&!grip&&e.target.closest('.mini')) return;    // let the action buttons act
+  const kind=tag?'tag':'card';
+  const startAt={x:e.clientX,y:e.clientY};
+  if(grip){ e.preventDefault(); startDrag(el,e,kind); }
+  else press={el,kind,startAt,e:{clientX:e.clientX,clientY:e.clientY},
+    timer:e.pointerType==='mouse'?null:setTimeout(()=>{ if(press){startDrag(press.el,press.e,press.kind); press=null;} },320)};
+},{passive:false});
+
+document.addEventListener('pointermove',e=>{
+  if(press){
+    const far=Math.abs(e.clientX-press.startAt.x)+Math.abs(e.clientY-press.startAt.y)>6;
+    if(far){
+      if(press.timer){ clearTimeout(press.timer); press=null; }     // touch scroll wins
+      else { startDrag(press.el,press.e,press.kind); press=null; }  // mouse threshold
+    }
+  }
+  if(drag){ e.preventDefault(); overDrag(e); }
+},{passive:false});
+
+document.addEventListener('touchmove',e=>{ if(drag) e.preventDefault(); },{passive:false});
+['pointerup','pointercancel'].forEach(t=>document.addEventListener(t,()=>{
+  if(press){ clearTimeout(press.timer); press=null; }
+  endDrag();
+}));
+
+/* ── quick move menu ───────────────────────────────────── */
+let menu=null;
+function closeMenu(){ if(menu){menu.remove();menu=null;} }
+function openMenu(anchor,items){
+  closeMenu();
+  menu=document.createElement('div');
+  menu.className='menu';
+  for(const it of items){
+    if(it.sep){ menu.appendChild(document.createElement('hr')); continue; }
+    const b=document.createElement('button');
+    b.type='button';
+    b.innerHTML=(it.color?`<i style="background:var(--${it.color})"></i>`:'')+esc(it.label);
+    b.addEventListener('click',()=>{ closeMenu(); it.run(); });
+    menu.appendChild(b);
+  }
+  document.body.appendChild(menu);
+  const r=anchor.getBoundingClientRect(), m=menu.getBoundingClientRect();
+  menu.style.left=Math.max(8,Math.min(r.left,innerWidth-m.width-8))+'px';
+  menu.style.top=(r.bottom+m.height>innerHeight-8?r.top-m.height-6:r.bottom+6)+'px';
+}
+document.addEventListener('pointerdown',e=>{ if(menu&&!e.target.closest('.menu')) closeMenu(); },true);
+addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu(); });
+
+/* ── click routing ─────────────────────────────────────── */
+$('#columns').addEventListener('click',e=>{
+  if(suppressClick) return;
+  const btn=e.target.closest('button[data-act]'); if(!btn) return;
+  const card=btn.closest('.card'), id=card.dataset.id;
+  const act=btn.dataset.act;
+  if(act==='detail') openPerson(id,true);
+  if(act==='edit') openPerson(id,false);
+  if(act==='move'){
+    const cur=card.closest('.col').dataset.status;
+    openMenu(btn,ST.filter(st=>st!==cur).map(st=>({label:'移到「'+ST_LABEL[st]+'」',color:st,
+      run:()=>moveCard(id,st,null)})));
+  }
+});
+
+$('#gcols').addEventListener('click',e=>{
+  const tag=e.target.closest('.tag'); if(!tag||drag||suppressClick) return;
+  const cur=tag.closest('.gcol').dataset.cat, id=tag.dataset.id;
+  openMenu(tag,CATS.filter(c=>c!==cur).map(c=>({label:'移到「'+CAT_LABEL[c]+'」',
+    run:()=>moveTag(id,c,null)})));
+});
+
+$('#notes').addEventListener('click',async e=>{
+  const btn=e.target.closest('button[data-act]'); if(!btn) return;
+  const id=btn.closest('.note').dataset.id;
+  const s=load(), n=s.notices.find(x=>x.id===id); if(!n) return;
+  if(btn.dataset.act==='edit'){
+    const v=await ask({title:'编辑公告',input:n.text||'',confirmLabel:'保存'});
+    if(v===null) return;
+    if(!v.trim()){ toast('公告不能为空'); return; }
+    n.text=v.trim(); n.updatedAt=new Date().toISOString();
+  }else{
+    const snapshot=localStorage.getItem(KEY);
+    if(!await ask({title:'删除这条公告？',message:n.text.slice(0,80),confirmLabel:'删除',danger:true})) return;
+    s.notices=s.notices.filter(x=>x.id!==id);
+    save(s); paint();
+    toast('公告已删除',()=>{ localStorage.setItem(KEY,snapshot); paint(); });
+    return;
+  }
+  save(s); paint();
+});
+
+/* ── person dialog ─────────────────────────────────────── */
+function openPerson(id,readOnly){
+  const s=load(), d=listOf(s), p=d.people.find(x=>x.id===id);
+  if(!p) return;
+  editingId=id; editingList=listKey;
+  const dlg=$('#personDlg');
+  $('#dlgTitle').textContent=readOnly?p.name:'编辑资料';
+  $('#dlgSub').textContent=readOnly?ST_LABEL[d.statuses[id]||'pool']+' · '+CAT_LABEL[s.bottomTypes[id]||'friend']:'修改姓名与备注';
+  $('#dlgName').value=p.name||'';
+  $('#dlgNote').value=(d.personNotes||{})[id]||'';
+  $('#dlgNote').placeholder=readOnly?'暂无备注':'记录联系方式、邀请进度或其他信息…';
+  $('#dlgName').readOnly=readOnly; $('#dlgNote').readOnly=readOnly;
+  $('#dlgSave').hidden=readOnly; $('#dlgDelete').hidden=readOnly;
+  $('#dlgCancel').textContent=readOnly?'关闭':'取消';
+  dlg.returnValue='';
+  dlg.showModal();
+  if(!readOnly) requestAnimationFrame(()=>$('#dlgName').focus());
+}
+$('#dlgCancel').addEventListener('click',()=>{editingId=null;$('#personDlg').close()});
+$('#dlgDelete').addEventListener('click',async()=>{
+  if(!editingId) return;
+  const s=load(), p=listOf(s,editingList).people.find(x=>x.id===editingId);
+  const snapshot=localStorage.getItem(KEY);
+  const name=p?p.name:'该对象', id=editingId, key=editingList;
+  editingId=null; $('#personDlg').close();
+  if(!await ask({title:'删除「'+name+'」？',message:'连同备注与分组一起移除。删除后可以撤销。',
+    confirmLabel:'删除',danger:true})) return;
+  removePerson(id,key);
+  toast('已删除「'+name+'」',()=>{ localStorage.setItem(KEY,snapshot); paint();
+    if(autoSync&&cloudOn) save(load()); });
+});
+$('#personDlg').addEventListener('close',()=>{
+  const dlg=$('#personDlg');
+  if(dlg.returnValue!=='save'||!editingId){ editingId=null; return; }
+  const s=load(), d=listOf(s,editingList), p=d.people.find(x=>x.id===editingId);
+  const nm=clean($('#dlgName').value);
+  if(p&&nm) p.name=nm;
+  d.personNotes=d.personNotes||{};
+  const note=$('#dlgNote').value.trim();
+  if(note) d.personNotes[editingId]=note; else delete d.personNotes[editingId];
+  editingId=null;
+  save(s); paint();
+});
+
+/* ── ask: in-page confirm / prompt ─────────────────────
+   Native confirm() and prompt() are blocked inside sandboxed embeds,
+   so every question goes through this dialog instead. */
+function ask(opts){
+  const o=opts||{};
+  return new Promise(res=>{
+    const dlg=$('#askDlg'), yes=$('#askYes'), no=$('#askNo'), box=$('#askInput');
+    let settled=false;
+    const fail=o.input==null?false:null;
+    const done=v=>{ if(settled) return; settled=true; dlg.close(); res(v); };
+    $('#askTitle').textContent=o.title||'确认';
+    $('#askMsg').textContent=o.message||''; $('#askMsg').hidden=!o.message;
+    box.hidden=o.input==null; box.value=o.input||'';
+    yes.textContent=o.confirmLabel||'确定'; no.textContent=o.cancelLabel||'取消';
+    yes.classList.toggle('solid-danger',!!o.danger);
+    yes.classList.toggle('primary',!o.danger);
+    yes.onclick=()=>done(o.input==null?true:box.value);
+    no.onclick=()=>done(fail);
+    dlg.onclose=()=>done(fail);
+    dlg.showModal();
+    requestAnimationFrame(()=>(o.input==null?yes:box).focus());
+  });
+}
+
+/* ── toast ─────────────────────────────────────────────── */
+let toastTimer=null;
+function toast(msg,undo){
+  const box=$('#toast'), act=$('#toastAct');
+  $('#toastMsg').textContent=msg;
+  act.hidden=!undo;
+  act.onclick=undo?()=>{undo();box.classList.remove('on')}:null;
+  box.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>box.classList.remove('on'),undo?7000:2600);
+}
+
+/* ── tools ─────────────────────────────────────────────── */
+$('#addBtn').addEventListener('click',()=>{
+  const v=$('#newName').value;
+  const n=addPeople([v],$('#allowDup').checked);
+  $('#newName').value='';
+  $('#newName').focus();
+  if(!n&&clean(v)) toast('「'+clean(v)+'」已在名单里');
+});
+$('#newName').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#addBtn').click(); });
+$('#bulkToggle').addEventListener('click',e=>{
+  const box=$('#bulkBox'), open=box.classList.toggle('open');
+  e.currentTarget.setAttribute('aria-expanded',open);
+  if(open) $('#bulkInput').focus();
+});
+$('#bulkAdd').addEventListener('click',()=>{
+  const parts=($('#bulkInput').value||'').split(/[,\n\r;、，；]+/);
+  const n=addPeople(parts,$('#allowDup').checked);
+  $('#bulkInput').value='';
+  toast(n?'已添加 '+n+' 人':'没有新的姓名可添加');
+});
+$('#searchInput').addEventListener('input',e=>{
+  query=e.target.value.trim().toLowerCase();
+  $('#searchClear').hidden=!query;
+  paint();
+});
+$('#searchClear').addEventListener('click',()=>{
+  $('#searchInput').value=''; query=''; $('#searchClear').hidden=true; paint();
+});
+$('#railToggle').addEventListener('click',e=>{
+  const open=$('#railBody').classList.toggle('open');
+  e.currentTarget.setAttribute('aria-expanded',open);
+});
+$$('.tab').forEach(tab=>tab.addEventListener('click',()=>{
+  view=tab.dataset.target;
+  listKey=view==='fall2026'?'fall2026':'main';
+  $$('.tab').forEach(t=>t.setAttribute('aria-selected',String(t===tab)));
+  paint();
+}));
+$('#noticeAdd').addEventListener('click',()=>{
+  const el=$('#noticeInput'), text=el.value.trim();
+  if(!text){ el.focus(); return; }
+  const s=load();
+  s.notices.push({id:'n_'+Math.random().toString(36).slice(2,10),text,createdAt:new Date().toISOString()});
+  el.value=''; save(s); paint(); toast('公告已发布');
+});
+$('#noticeInput').addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key==='Enter') $('#noticeAdd').click();
+});
+
+/* theme */
+function applyTheme(t){
+  const root=document.getElementById('nyyg-root')||document.body;
+  root.classList.toggle('force-dark',t==='dark');
+  root.classList.toggle('force-light',t==='light');
+  if(t) document.documentElement.dataset.theme=t;
+  else delete document.documentElement.dataset.theme;
+}
+// The preference lives here, not on the document element — an embedding host
+// may re-stamp data-theme on the root at any time.
+let themePref='';
+try{ themePref=localStorage.getItem(THEME_KEY)||''; }catch(e){}
+applyTheme(themePref);
+$('#themeBtn').addEventListener('click',()=>{
+  themePref = themePref==='dark' ? 'light' : themePref==='light' ? '' : 'dark';
+  applyTheme(themePref);
+  try{ themePref?localStorage.setItem(THEME_KEY,themePref):localStorage.removeItem(THEME_KEY); }catch(e){}
+  toast(themePref==='dark'?'深色':themePref==='light'?'浅色':'跟随系统');
+});
+
+/* export / import */
+// Saves through the host when the page runs inside a viewer that mediates
+// downloads; falls back to a normal link when it is a plain web page.
+async function offerFile(filename,blob){
+  try{
+    const dl=(window.claude&&typeof claude.use==='function')?await claude.use('downloads'):null;
+    if(dl&&dl.save){
+      try{ await dl.save({filename,data:blob}); toast('已保存 '+filename); return; }
+      catch(e1){
+        const url=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(blob)});
+        await dl.save({filename,data:url}); toast('已保存 '+filename); return;
+      }
+    }
+  }catch(err){ console.error(err); }
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+$('#exportBtn').addEventListener('click',()=>{
+  offerFile('大纽约青年人服事-'+new Date().toISOString().slice(0,10)+'.json',
+    new Blob([JSON.stringify(load(),null,2)],{type:'application/json'}));
+});
+$('#importBtn').addEventListener('click',()=>$('#importFile').click());
+$('#importFile').addEventListener('change',e=>{
+  const f=e.target.files[0]; e.target.value='';
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=async ev=>{
+    try{
+      const o=JSON.parse(ev.target.result);
+      if(!o||!o.people||!o.statuses) throw new Error('缺少 people 或 statuses 字段');
+      if(!await ask({title:'导入这份数据？',message:'会覆盖这台设备上现有的名单（共 '+(o.people.length||0)+' 人）。',
+        confirmLabel:'导入',danger:true})) return;
+      const snapshot=localStorage.getItem(KEY);
+      localStorage.setItem(KEY,JSON.stringify(o));
+      paint();
+      toast('导入成功',()=>{ if(snapshot) localStorage.setItem(KEY,snapshot); paint(); });
+    }catch(err){ toast('导入失败：'+err.message); }
+  };
+  r.readAsText(f);
+});
+
+/* ── PNG export ────────────────────────────────────────── */
+$('#pngBtn').addEventListener('click',()=>{
+  try{ exportPNG(); }catch(err){ console.error(err); toast('导出失败：'+err.message); }
+});
+function exportPNG(){
+  const s=load(), d=listOf(s);
+  const id2n={}; for(const p of d.people) id2n[p.id]=p.name||'';
+  const fall=s.campaigns.fall2026;
+  const allNames={}; for(const p of s.people.concat(fall.people)) allNames[p.id]=p.name||'';
+
+  const W=760, P=28, COLW=(W-P*2-3*12)/4, GAP=12;
+  const HEAD=64, COLHEAD=34, ROW=28, ROWGAP=6, PADT=10;
+  const SEC=22, BOXPAD=12, TAGH=22, TAGGAP=6, TAGPX=11, TITLEH=24;
+
+  const buckets={}; for(const st of ST) buckets[st]=d.order[st].filter(id=>id2n[id]).map(id=>id2n[id]);
+  const rows=Math.max(1,...ST.map(st=>buckets[st].length));
+  const colH=COLHEAD+PADT+rows*(ROW+ROWGAP)+4;
+
+  const probe=document.createElement('canvas').getContext('2d');
+  const font=(px,w)=>`${w||400} ${px}px "PingFang SC","Microsoft YaHei",-apple-system,"Segoe UI",Helvetica,sans-serif`;
+  probe.font=font(12);
+  const boxW=(W-P*2-24)/3;
+  const groupOf=c=>s.bottomOrder[c].filter(id=>allNames[id]).map(id=>allNames[id]);
+  const cats=CATS.map(c=>({c,names:groupOf(c)}));
+  const boxH=(names)=>{
+    let x=0,r=1;
+    for(const n of names){
+      const w=Math.ceil(probe.measureText(n).width)+TAGPX*2;
+      if(x===0) x=w; else if(x+TAGGAP+w<=boxW-BOXPAD*2) x+=TAGGAP+w; else { r++; x=w; }
+    }
+    return BOXPAD+TITLEH+r*TAGH+(r-1)*TAGGAP+BOXPAD;
+  };
+  const gH=Math.max(...cats.map(x=>boxH(x.names)));
+  const H=P+HEAD+colH+SEC+22+gH+P+18;
+
+  const k=Math.min(3,Math.max(2,Math.round(devicePixelRatio||1)+1));
+  const cv=document.createElement('canvas');
+  cv.width=W*k; cv.height=H*k;
+  const c=cv.getContext('2d'); c.scale(k,k);
+  const C={bg:'#f3f5f8',card:'#ffffff',line:'#dde3ea',ink:'#111d2b',soft:'#5d6d80',
+    pool:'#4a7fc1',yes:'#2f8f6d',maybe:'#c78e1e',no:'#c25563',gold:'#c2953f',navy:'#14263c'};
+  const rr=(x,y,w,h,r)=>{const q=Math.min(r,w/2,h/2);c.beginPath();c.moveTo(x+q,y);
+    c.arcTo(x+w,y,x+w,y+h,q);c.arcTo(x+w,y+h,x,y+h,q);c.arcTo(x,y+h,x,y,q);c.arcTo(x,y,x+w,y,q);c.closePath()};
+  const fit=(t,max)=>{let v=String(t||'');while(c.measureText(v).width>max&&v.length>1)v=v.slice(0,-1);
+    return v===String(t||'')?v:v+'…'};
+
+  c.fillStyle=C.bg; c.fillRect(0,0,W,H);
+  c.fillStyle=C.navy; c.fillRect(0,0,W,6);
+
+  c.textAlign='left'; c.fillStyle=C.ink; c.font=font(21,600);
+  c.fillText(view==='fall2026'?'2026 Fall 开学季名单':'大纽约青年人服事 · 邀请名单',P,P+22);
+  c.fillStyle=C.soft; c.font=font(11.5);
+  c.fillText(new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric'})
+    +' · 共 '+d.people.length+' 人',P,P+42);
+
+  const top=P+HEAD;
+  ST.forEach((st,i)=>{
+    const x=P+i*(COLW+GAP);
+    c.fillStyle=C.card; rr(x,top,COLW,colH,10); c.fill();
+    c.strokeStyle=C.line; c.lineWidth=1; rr(x,top,COLW,colH,10); c.stroke();
+    c.fillStyle=C[st]; rr(x,top,COLW,3,2); c.fill();
+    c.fillStyle=C.ink; c.font=font(13.5,600);
+    c.fillText(ST_LABEL[st],x+12,top+24);
+    c.fillStyle=C.soft; c.font=font(11.5);
+    c.textAlign='right'; c.fillText(String(buckets[st].length),x+COLW-12,top+24); c.textAlign='left';
+    let y=top+COLHEAD+PADT-4;
+    c.font=font(12.5);
+    for(const nm of buckets[st]){
+      c.fillStyle='#fbfcfd'; rr(x+9,y,COLW-18,ROW,7); c.fill();
+      c.strokeStyle=C.line; rr(x+9,y,COLW-18,ROW,7); c.stroke();
+      c.fillStyle=C[st]; rr(x+9,y+6,3,ROW-12,2); c.fill();
+      c.fillStyle=C.ink; c.fillText(fit(nm,COLW-38),x+20,y+ROW/2+4.5);
+      y+=ROW+ROWGAP;
+    }
+  });
+
+  const secY=top+colH+SEC;
+  c.fillStyle=C.ink; c.font=font(13.5,600); c.fillText('身份分组',P,secY);
+  const boxY=secY+14;
+  cats.forEach((g,i)=>{
+    const x=P+i*(boxW+12);
+    c.fillStyle=C.card; rr(x,boxY,boxW,gH,10); c.fill();
+    c.strokeStyle=C.line; rr(x,boxY,boxW,gH,10); c.stroke();
+    const dot={member:C.yes,baptism:C.pool,friend:C.gold}[g.c];
+    c.fillStyle=dot; c.beginPath(); c.arc(x+BOXPAD+3,boxY+BOXPAD+7,3.5,0,7); c.fill();
+    c.fillStyle=C.ink; c.font=font(12.5,600);
+    c.fillText(CAT_LABEL[g.c],x+BOXPAD+13,boxY+BOXPAD+11);
+    c.fillStyle=C.soft; c.font=font(11);
+    c.fillText('('+g.names.length+')',x+BOXPAD+13+c.measureText(CAT_LABEL[g.c]).width+22,boxY+BOXPAD+11);
+    let tx=x+BOXPAD, ty=boxY+BOXPAD+TITLEH;
+    c.font=font(12);
+    for(const nm of g.names){
+      const w=Math.ceil(c.measureText(nm).width)+TAGPX*2;
+      if(tx>x+BOXPAD&&tx+w>x+boxW-BOXPAD){ tx=x+BOXPAD; ty+=TAGH+TAGGAP; }
+      c.fillStyle={member:'#e8f4ef',baptism:'#eaf1fa',friend:'#fbf2de'}[g.c];
+      rr(tx,ty,w,TAGH,11); c.fill();
+      c.fillStyle=dot; c.fillText(nm,tx+TAGPX,ty+TAGH/2+4);
+      tx+=w+TAGGAP;
+    }
+  });
+
+  c.fillStyle=C.soft; c.font=font(10.5); c.textAlign='center';
+  c.fillText('New York Young Gospel · People Care Board',W/2,H-P+6);
+
+  cv.toBlob(b=>{ offerFile('跟进名单-'+new Date().toISOString().slice(0,10)+'.png',b); },'image/png');
+}
+
+/* ── Google Sheet sync ─────────────────────────────────── */
+const scriptUrl=()=>{ try{ return (localStorage.getItem(URL_KEY)||DEFAULT_URL).trim(); }catch(e){ return DEFAULT_URL; } };
+function setSync(tone,msg){
+  const el=$('#syncState');
+  el.dataset.tone=tone;
+  el.querySelector('span').textContent=msg;
+}
+function cloudOff(msg){
+  cloudOn=false; autoSync=false;
+  setSync('off',msg);
+  $('#syncUp').disabled=true; $('#syncDown').disabled=true;
+  $('#foot').textContent='本地模式 · 数据保存在这台设备的浏览器里';
+}
+
+async function pushCloud(silent){
+  if(!cloudOn) return;
+  const url=scriptUrl();
+  if(!url){ toast('请先设置 Apps Script 地址'); return; }
+  setSync('busy','正在同步…');
+  const at=revision;
+  try{
+    const s=load();
+    // keep compatibility with the sheet script: notes also ride on each person
+    s.people=s.people.map(p=>({...p,note:(s.personNotes||{})[p.id]||''}));
+    const fall=listOf(s,'fall2026');
+    fall.people=fall.people.map(p=>({...p,note:(fall.personNotes||{})[p.id]||'',
+      category:(s.bottomTypes||{})[p.id]||'friend'}));
+    localStorage.setItem(KEY,JSON.stringify(s));
+    const res=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({action:'save',state:s})});
+    const data=await res.json();
+    if(!data||!data.ok) throw new Error(data&&data.error||'同步失败');
+    if(data.state&&revision===at){ localStorage.setItem(KEY,JSON.stringify(data.state)); paint(); }
+    dirty=false;
+    setSync('ok','已同步 '+new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}));
+    if(!silent) toast('已同步到 Google Sheet');
+  }catch(err){
+    console.error(err);
+    setSync('off','同步失败');
+    if(!silent) toast('同步失败：'+err.message);
+  }
+}
+
+async function pullCloud(silent){
+  if(!cloudOn) return false;
+  const url=scriptUrl();
+  if(!url) return false;
+  if(!silent&&!await ask({title:'从 Google Sheet 读取？',
+    message:'会用云端的名单覆盖这台设备上的名单。',confirmLabel:'读取',danger:true})) return false;
+  if(silent&&dirty) return false;
+  setSync('busy','正在读取…');
+  try{
+    const sep=url.includes('?')?'&':'?';
+    const res=await fetch(url+sep+'action=load&_='+Date.now());
+    const data=await res.json();
+    if(!data||!data.ok) throw new Error(data&&data.error||'读取失败');
+    if(!data.state) throw new Error('云端还没有数据');
+    const s=data.state;
+    if(!s.people||!s.statuses) throw new Error('云端数据格式不正确');
+    s.personNotes=s.personNotes||{};
+    for(const p of s.people) if(p&&p.id&&typeof p.note==='string') s.personNotes[p.id]=p.note;
+    const fall=listOf(s,'fall2026');
+    for(const p of fall.people) if(p&&p.id&&typeof p.note==='string') fall.personNotes[p.id]=p.note;
+    localStorage.setItem(KEY,JSON.stringify(s));
+    paint();
+    setSync('ok','已读取 '+new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}));
+    if(!silent) toast('已从 Google Sheet 读取');
+    return true;
+  }catch(err){
+    console.error(err);
+    if(silent) cloudOff('云端不可用 · 本地模式');
+    else { setSync('off','读取失败'); toast('读取失败：'+err.message); }
+    return false;
+  }
+}
+
+$('#syncUp').addEventListener('click',()=>pushCloud(false));
+$('#syncDown').addEventListener('click',()=>pullCloud(false));
+$('#syncSetup').addEventListener('click',()=>{
+  $('#syncUrl').value=scriptUrl();
+  $('#syncDlg').returnValue='';
+  $('#syncDlg').showModal();
+});
+$('#syncCancel').addEventListener('click',()=>$('#syncDlg').close());
+$('#syncReset').addEventListener('click',()=>{ $('#syncUrl').value=DEFAULT_URL; });
+$('#wipeLocal').addEventListener('click',async()=>{
+  $('#syncDlg').close();
+  if(!await ask({title:'清空本机数据？',message:'移除这台设备上的名单、分组与公告。Google Sheet 上的数据不受影响，可以撤销。',
+    confirmLabel:'清空',danger:true})) return;
+  const backup=localStorage.getItem(KEY);
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  $('#syncDlg').close();
+  view='board'; listKey='main';
+  $$('.tab').forEach(t=>t.setAttribute('aria-selected',String(t.dataset.target==='board')));
+  paint();
+  toast('本机数据已清空',()=>{ if(backup) localStorage.setItem(KEY,backup); paint(); });
+});
+$('#syncDlg').addEventListener('close',()=>{
+  if($('#syncDlg').returnValue!=='save') return;
+  const v=$('#syncUrl').value.trim();
+  try{ v?localStorage.setItem(URL_KEY,v):localStorage.removeItem(URL_KEY); }catch(e){}
+  cloudOn=true; $('#syncUp').disabled=false; $('#syncDown').disabled=false;
+  toast('同步地址已保存');
+  boot();
+});
+
+/* ── boot ──────────────────────────────────────────────── */
+async function boot(){
+  setSync('busy','正在连接云端…');
+  const ok=await pullCloud(true);
+  if(ok) autoSync=true;
+}
+paint();
+boot();
+})();
+</script>
+</body>
+</html>
