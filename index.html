@@ -474,13 +474,13 @@ dialog input[readonly],dialog textarea[readonly]{background:var(--sunken);color:
 <dialog id="syncDlg">
   <form method="dialog">
     <h2>同步设置</h2>
-    <p class="sub">粘贴部署为 Web App 的 Google Apps Script 地址。留空则恢复默认地址。</p>
+    <p class="sub">粘贴部署为 Web App 的 Google Apps Script 地址。留空则只保存在本机，不上传任何数据。</p>
     <label for="syncUrl">Apps Script Web App URL</label>
     <input id="syncUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec">
     <p class="sub" style="margin:16px 0 0">清空本机数据只影响这台设备的浏览器，不会改动 Google Sheet 上的名单。</p>
     <div class="dlg-acts">
       <button type="button" class="btn danger" id="wipeLocal">清空本机数据</button>
-      <button type="button" class="btn" id="syncReset">恢复默认地址</button>
+      <button type="button" class="btn" id="syncReset">清除地址</button>
       <button type="button" class="btn" id="syncCancel">取消</button>
       <button type="submit" class="btn primary" value="save">保存</button>
     </div>
@@ -512,7 +512,8 @@ const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const KEY='invite_manager_v2';
 const URL_KEY='invite_manager_google_script_url';
 const THEME_KEY='invite_manager_theme';
-const DEFAULT_URL='https://script.google.com/macros/s/AKfycbyMFQf63WaCWHGHMFWNIwab7Qda0cGupq4Q3upB5hS3ake43Xpe3K3Wkqka2vGh6Q-gTw/exec';
+// Set your own Apps Script Web App address in 同步设置; nothing is sent anywhere until you do.
+const DEFAULT_URL='';
 const ST=['pool','yes','maybe','no'];
 const ST_LABEL={pool:'邀请',yes:'确定',maybe:'待定',no:'不来'};
 const CATS=['member','baptism','friend'];
@@ -1235,10 +1236,10 @@ function setSync(tone,msg){
   el.dataset.tone=tone;
   el.querySelector('span').textContent=msg;
 }
+// Reachable-but-idle: the buttons stay live so a retry is always one click away.
 function cloudOff(msg){
-  cloudOn=false; autoSync=false;
+  autoSync=false;
   setSync('off',msg);
-  $('#syncUp').disabled=true; $('#syncDown').disabled=true;
   $('#foot').textContent='本地模式 · 数据保存在这台设备的浏览器里';
 }
 
@@ -1284,7 +1285,13 @@ async function pullCloud(silent){
     const res=await fetch(url+sep+'action=load&_='+Date.now());
     const data=await res.json();
     if(!data||!data.ok) throw new Error(data&&data.error||'读取失败');
-    if(!data.state) throw new Error('云端还没有数据');
+    // A fresh sheet answers "ok, but nothing saved yet" — that is a working
+    // connection, not a failure. Keep local data and let the first upload fill it.
+    if(!data.state){
+      setSync('ok','云端还没有名单');
+      if(!silent) toast('云端还是空的，点「同步到云端」上传这台设备的名单');
+      return true;
+    }
     const s=data.state;
     if(!s.people||!s.statuses) throw new Error('云端数据格式不正确');
     s.personNotes=s.personNotes||{};
@@ -1336,6 +1343,11 @@ $('#syncDlg').addEventListener('close',()=>{
 
 /* ── boot ──────────────────────────────────────────────── */
 async function boot(){
+  if(!scriptUrl()){
+    setSync('off','未连接云端 · 点「同步设置」');
+    $('#foot').textContent='本地模式 · 数据保存在这台设备的浏览器里';
+    return;
+  }
   setSync('busy','正在连接云端…');
   const ok=await pullCloud(true);
   if(ok) autoSync=true;
