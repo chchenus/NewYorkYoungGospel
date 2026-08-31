@@ -19,6 +19,7 @@
   --gold:#c2953f; --gold-soft:#e7c887;
   --pool:#4a7fc1; --yes:#2f8f6d; --maybe:#c78e1e; --no:#c25563;
   --pool-bg:#eaf1fa; --yes-bg:#e8f4ef; --maybe-bg:#fbf2de; --no-bg:#fbecee;
+  --tab-bg:#1b3450; --tab-ink:#ffffff;
   --shadow:0 1px 2px rgba(17,29,43,.05), 0 8px 24px rgba(17,29,43,.06);
   --shadow-lift:0 6px 16px rgba(17,29,43,.13), 0 18px 40px rgba(17,29,43,.13);
   --r:12px;
@@ -36,6 +37,7 @@
     --gold:#d7ab63; --gold-soft:#f0d49a;
     --pool:#6d9fdd; --yes:#45ab86; --maybe:#d9ad4d; --no:#d97b85;
     --pool-bg:#16273c; --yes-bg:#14312a; --maybe-bg:#312817; --no-bg:#361f24;
+  --tab-bg:#2b4058; --tab-ink:#f2f7fc;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.32);
     --shadow-lift:0 6px 16px rgba(0,0,0,.5), 0 18px 40px rgba(0,0,0,.45);
   }
@@ -49,6 +51,7 @@
   --gold:#d7ab63; --gold-soft:#f0d49a;
   --pool:#6d9fdd; --yes:#45ab86; --maybe:#d9ad4d; --no:#d97b85;
   --pool-bg:#16273c; --yes-bg:#14312a; --maybe-bg:#312817; --no-bg:#361f24;
+  --tab-bg:#2b4058; --tab-ink:#f2f7fc;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.32);
   --shadow-lift:0 6px 16px rgba(0,0,0,.5), 0 18px 40px rgba(0,0,0,.45);
 }
@@ -77,6 +80,7 @@
   --gold:#d7ab63; --gold-soft:#f0d49a;
   --pool:#6d9fdd; --yes:#45ab86; --maybe:#d9ad4d; --no:#d97b85;
   --pool-bg:#16273c; --yes-bg:#14312a; --maybe-bg:#312817; --no-bg:#361f24;
+  --tab-bg:#2b4058; --tab-ink:#f2f7fc;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.32);
   --shadow-lift:0 6px 16px rgba(0,0,0,.5), 0 18px 40px rgba(0,0,0,.45);
 }
@@ -157,7 +161,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--serif);font-weight:600;text-wrap:balance}
 .sync-state[data-tone="off"] i{background:#c25563}
 @keyframes pulse{50%{opacity:.25}}
 .rail-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--rail-line);
-  display:flex;justify-content:space-between;align-items:center;gap:10px}
+  display:flex;justify-content:flex-end;align-items:center;gap:10px}
 .rail-foot a{color:var(--rail-soft);font-size:11.5px;text-decoration:none;border-bottom:1px solid var(--rail-line)}
 .rail-foot a:hover{color:var(--gold-soft)}
 
@@ -172,7 +176,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--serif);font-weight:600;text-wrap:balance}
 .tab{flex:0 0 auto;padding:7px 14px;border:0;border-radius:8px;background:none;color:var(--soft);
   font-size:12.5px;font-weight:600;white-space:nowrap;transition:background .15s ease,color .15s ease}
 .tab:hover{color:var(--ink);background:var(--surface-2)}
-.tab[aria-selected="true"]{color:var(--surface);background:var(--rail-2)}
+.tab[aria-selected="true"]{color:var(--tab-ink);background:var(--tab-bg)}
 
 /* progress meter */
 .meter{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid var(--line);
@@ -397,8 +401,7 @@ dialog input[readonly],dialog textarea[readonly]{background:var(--sunken);color:
   </div>
 
   <div class="rail-foot">
-    <a href="https://docs.google.com/spreadsheets/d/15uMfJDmleLfw2-2PaLVU_8a-zSGn7-T8qbXu_082VXs/edit?usp=sharing" target="_blank" rel="noopener noreferrer">打开 Google Sheet ↗</a>
-    <button class="linkbtn" id="themeBtn" aria-label="切换深浅色">◐</button>
+    <button class="linkbtn" id="themeBtn" aria-label="切换深浅色（浅色 / 深色 / 跟随系统）" title="切换深浅色">◐</button>
   </div>
 </aside>
 
