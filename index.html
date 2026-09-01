@@ -190,6 +190,36 @@ h1,h2,h3,h4{margin:0;font-family:var(--serif);font-weight:600;text-wrap:balance}
 .bar{display:flex;height:8px;border-radius:99px;overflow:hidden;background:var(--sunken)}
 .bar div{transition:width .3s ease}
 
+/* filter row + selection bar */
+.toolrow{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:10px 14px;
+  border:1px solid var(--line);border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow)}
+.fsel{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:9.5px;
+  font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.fsel select{padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);
+  color:var(--ink);font-family:var(--sans);font-size:12.5px;letter-spacing:0;text-transform:none}
+.fsel select:focus{outline:none;border-color:var(--pool)}
+.fchk{display:inline-flex;align-items:center;gap:6px;color:var(--soft);font-size:12.5px}
+.fchk input,.selbar input{accent-color:var(--pool)}
+.filter-info{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.spacer{margin-left:auto}
+/* A class that sets `display` outranks the UA rule for [hidden], so every
+   such class needs its own [hidden] partner or the element never hides. */
+[hidden]{display:none!important}
+.selbar[hidden],.toolrow[hidden]{display:none}
+.selbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 14px;
+  border:1px solid color-mix(in srgb,var(--pool) 40%,var(--line));border-radius:var(--r);
+  background:var(--pool-bg);box-shadow:var(--shadow)}
+.selbar b{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink)}
+.selbar .grp{display:inline-flex;flex-wrap:wrap;align-items:center;gap:5px;color:var(--soft);font-size:11.5px}
+.selbar button{padding:4px 9px;border:1px solid var(--line);border-radius:7px;background:var(--surface);
+  color:var(--ink-2);font-size:11.5px;font-weight:600}
+.selbar button:hover{border-color:var(--line-2);background:var(--surface-2)}
+.selbar button.danger{color:var(--no);border-color:color-mix(in srgb,var(--no) 38%,transparent)}
+.selbar button.danger:hover{background:var(--no-bg)}
+.selbar button[disabled]{opacity:.45;cursor:not-allowed}
+.pick{width:16px;height:16px;flex:0 0 auto;margin:0 3px 0 4px;cursor:pointer}
+.card.picked{border-color:var(--pool);background:var(--pool-bg)}
+
 /* board */
 .columns{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
 .col{display:flex;flex-direction:column;min-height:320px;border:1px solid var(--line);
@@ -252,6 +282,31 @@ h1,h2,h3,h4{margin:0;font-family:var(--serif);font-weight:600;text-wrap:balance}
 .gcol[data-cat="baptism"] .tag{color:var(--pool);border-color:color-mix(in srgb,var(--pool) 30%,transparent);background:var(--pool-bg)}
 .gcol[data-cat="friend"] .tag{color:var(--gold);border-color:color-mix(in srgb,var(--gold) 32%,transparent);background:var(--maybe-bg)}
 
+/* attendance */
+.fsel input[type=date],.fsel input[type=text]{padding:5px 8px;border:1px solid var(--line);
+  border-radius:8px;background:var(--surface-2);color:var(--ink);font-family:var(--sans);
+  font-size:12.5px;letter-spacing:0;text-transform:none}
+.fsel input:focus{outline:none;border-color:var(--pool)}
+.attend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.att{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--line);
+  border-radius:10px;background:var(--surface);cursor:pointer;font-size:13px;font-weight:600;
+  box-shadow:0 1px 2px rgba(17,29,43,.04)}
+.att:hover{border-color:var(--line-2)}
+.att input{width:16px;height:16px;flex:0 0 auto;accent-color:var(--yes);cursor:pointer}
+.att.on{border-color:var(--yes);background:var(--yes-bg)}
+.att .who{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.att .from{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--faint)}
+.attend-past{margin-top:6px}
+.attend-past h3{margin:0 0 9px;font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--soft)}
+.past-row{display:flex;align-items:center;gap:12px;padding:9px 12px;border:1px solid var(--line);
+  border-radius:9px;background:var(--surface);margin-bottom:6px;font-size:12.5px;cursor:pointer}
+.past-row:hover{border-color:var(--line-2);background:var(--surface-2)}
+.past-row.cur{border-color:var(--pool);background:var(--pool-bg)}
+.past-row time{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);min-width:88px}
+.past-row .lbl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--soft)}
+.past-row .cnt{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--yes)}
+
 /* notice */
 .notice{display:flex;flex-direction:column;gap:14px;max-width:760px}
 .compose{display:flex;flex-direction:column;gap:9px;padding:14px;border:1px solid var(--line);
@@ -307,6 +362,24 @@ dialog input[type=text],dialog input[type=url],dialog textarea{width:100%;paddin
 dialog textarea{min-height:130px;resize:vertical}
 dialog input:focus,dialog textarea:focus{outline:none;border-color:var(--pool);background:var(--surface)}
 dialog input[readonly],dialog textarea[readonly]{background:var(--sunken);color:var(--ink-2)}
+.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.fieldgrid label{margin:12px 0 6px}
+.fieldgrid .wide{grid-column:1/-1}
+dialog input[type=date]{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;
+  background:var(--surface-2);color:var(--ink);font-family:var(--sans)}
+dialog input[type=date]:focus{outline:none;border-color:var(--pool);background:var(--surface)}
+.attend-strip{margin-top:16px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--surface-2)}
+.attend-strip h3{margin:0 0 8px;font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.attend-dots{display:flex;flex-wrap:wrap;gap:5px}
+.attend-dots span{display:inline-flex;flex-direction:column;align-items:center;gap:4px;
+  font-family:var(--mono);font-size:9px;color:var(--faint)}
+.attend-dots i{width:11px;height:11px;border-radius:3px;background:var(--sunken);
+  border:1px solid var(--line)}
+.attend-dots i.on{background:var(--yes);border-color:var(--yes)}
+.attend-none{margin:0;color:var(--faint);font-size:11.5px}
+@media(max-width:560px){ .fieldgrid{grid-template-columns:1fr} }
 .dlg-acts{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
 .btn.solid-danger{color:#fff;border-color:var(--no);background:var(--no)}
 .btn.solid-danger:hover{filter:brightness(1.08);background:var(--no)}
@@ -416,6 +489,7 @@ dialog input[readonly],dialog textarea[readonly]{background:var(--sunken);color:
       <button class="tab" role="tab" data-target="board" aria-selected="true">主名单</button>
       <button class="tab" role="tab" data-target="fall2026" aria-selected="false">2026 Fall 开学季</button>
       <button class="tab" role="tab" data-target="group" aria-selected="false">身份分组</button>
+      <button class="tab" role="tab" data-target="attend" aria-selected="false">出席</button>
       <button class="tab" role="tab" data-target="notice" aria-selected="false">公告</button>
     </nav>
   </div>
@@ -429,6 +503,60 @@ dialog input[readonly],dialog textarea[readonly]{background:var(--sunken);color:
       </div>
       <div class="bar" id="mBar"></div>
     </div>
+    <div class="toolrow" id="filterRow">
+      <label class="fsel">身份
+        <select id="fCat">
+          <option value="">全部</option>
+          <option value="member">弟兄姊妹</option>
+          <option value="baptism">预备受浸</option>
+          <option value="friend">福音朋友</option>
+        </select>
+      </label>
+      <label class="fsel">排序
+        <select id="fSort">
+          <option value="manual">手动顺序</option>
+          <option value="name">姓名</option>
+          <option value="added">最近添加</option>
+        </select>
+      </label>
+      <label class="fsel">学校 <select id="fSchool"><option value="">全部</option></select></label>
+      <label class="fsel">住处 <select id="fPlace"><option value="">全部</option></select></label>
+      <label class="fsel">受浸
+        <select id="fBap">
+          <option value="">全部</option>
+          <option value="yes">已受浸</option>
+          <option value="new">3 個月內受浸</option>
+          <option value="no">未受浸</option>
+        </select>
+      </label>
+      <label class="fchk"><input type="checkbox" id="fNote"> 只看有备注</label>
+      <label class="fchk"><input type="checkbox" id="fAbsent"> 久未出席</label>
+      <span class="filter-info" id="filterInfo"></span>
+      <span class="spacer"></span>
+      <button class="btn tiny" id="fClear" hidden>清除筛选</button>
+      <button class="btn tiny" id="selToggle" aria-pressed="false">选择</button>
+    </div>
+
+    <div class="selbar" id="selBar" hidden>
+      <b id="selCount">已选 0 人</b>
+      <button id="selAll">全选可见</button>
+      <button id="selNone">取消选择</button>
+      <span class="grp">移到
+        <button data-bulk="st" data-v="pool">邀请</button>
+        <button data-bulk="st" data-v="yes">确定</button>
+        <button data-bulk="st" data-v="maybe">待定</button>
+        <button data-bulk="st" data-v="no">不来</button>
+      </span>
+      <span class="grp">归类
+        <button data-bulk="cat" data-v="member">弟兄姊妹</button>
+        <button data-bulk="cat" data-v="baptism">预备受浸</button>
+        <button data-bulk="cat" data-v="friend">福音朋友</button>
+      </span>
+      <span class="spacer"></span>
+      <button class="danger" id="selDel">删除</button>
+      <button id="selDone">完成</button>
+    </div>
+
     <div class="columns" id="columns"></div>
   </section>
 
@@ -437,6 +565,24 @@ dialog input[readonly],dialog textarea[readonly]{background:var(--sunken);color:
     <div class="group">
       <div class="gcols" id="gcols"></div>
       <p class="hint" style="color:var(--soft)">新增的人默认进入「福音朋友」。分组同时包含主名单与开学季名单，标注 <span class="from" style="font-family:var(--mono)">FALL</span> 的来自开学季。</p>
+    </div>
+  </section>
+
+  <!-- 出席 -->
+  <section data-view="attend" id="attendView">
+    <div class="toolrow">
+      <label class="fsel">日期 <input id="aDate" type="date"></label>
+      <label class="fsel">聚会 <input id="aLabel" type="text" placeholder="主日聚会" list="dl_meeting">
+        <datalist id="dl_meeting"></datalist></label>
+      <span class="filter-info" id="aInfo"></span>
+      <span class="spacer"></span>
+      <button class="btn tiny" id="aClear">全部取消</button>
+      <button class="btn tiny" id="aDelete" hidden>删除这次记录</button>
+    </div>
+    <div class="attend-grid" id="aPeople"></div>
+    <div class="attend-past">
+      <h3>已记录的聚会</h3>
+      <div id="aPast"></div>
     </div>
   </section>
 
@@ -464,6 +610,8 @@ dialog input[readonly],dialog textarea[readonly]{background:var(--sunken);color:
     <p class="sub" id="dlgSub">查看详细信息。</p>
     <label for="dlgName">姓名</label>
     <input id="dlgName" type="text" autocomplete="off">
+    <div class="fieldgrid" id="dlgFields"></div>
+    <div id="dlgAttend" class="attend-strip" hidden></div>
     <label for="dlgNote">备注</label>
     <textarea id="dlgNote" placeholder="记录联系方式、邀请进度或其他信息…"></textarea>
     <div class="dlg-acts">
@@ -521,23 +669,43 @@ const ST=['pool','yes','maybe','no'];
 const ST_LABEL={pool:'邀请',yes:'确定',maybe:'待定',no:'不来'};
 const CATS=['member','baptism','friend'];
 const CAT_LABEL={member:'弟兄姊妹',baptism:'预备受浸',friend:'福音朋友'};
+
+// Optional per-person fields. `list` marks the ones that offer suggestions
+// drawn from values already in use, so entries stay consistent over time.
+const FIELDS=[
+  {key:'school',   label:'学校/单位',   type:'text', list:true},
+  {key:'place',    label:'住处',        type:'text', list:true},
+  {key:'contact',  label:'联系方式',    type:'text'},
+  {key:'referrer', label:'介绍人',      type:'text', list:true},
+  {key:'metDate',  label:'初次接触日期', type:'date'},
+  {key:'metPlace', label:'初次接触地點', type:'text', list:true},
+  {key:'baptized', label:'受浸日期',    type:'date'}
+];
+const FIELD_KEYS=FIELDS.map(f=>f.key);
 const VIEWS={
   board:['跟进中心','拖动姓名更新进度，点姓名查看个人备注。'],
   fall2026:['2026 Fall 开学季','独立的开学季福音名单，与主名单分开统计。'],
   group:['身份分组','在弟兄姊妹、预备受浸与福音朋友之间拖动姓名。'],
+  attend:['出席记录','选好日期与聚会，勾选到场的人。'],
   notice:['公告','发布聚会安排、代祷事项与服事提醒。']
 };
 
 let view='board';            // board | fall2026 | group | notice
 let listKey='main';          // main | fall2026
 let query='';
+let filterCat='', filterNote=false, sortMode='manual';
+let filterSchool='', filterPlace='', filterBap='', filterAbsent=false;
+let selectMode=false;
+const selected=new Set();
 let editingId=null, editingList='main';
 
 /* ── state ─────────────────────────────────────────────── */
 function emptyList(){return{people:[],statuses:{},order:{pool:[],yes:[],maybe:[],no:[]},personNotes:{}}}
 function blank(){return{people:[],statuses:{},history:[],order:{pool:[],yes:[],maybe:[],no:[]},
   bottomTypes:{},bottomOrder:{member:[],baptism:[],friend:[]},personNotes:{},
-  deletedPeople:{main:[],fall2026:[]},campaigns:{fall2026:emptyList()},notices:[]}}
+  deletedPeople:{main:[],fall2026:[]},campaigns:{fall2026:emptyList()},notices:[],
+  // added in Stage 2 — absent in older saves, filled in by load()
+  personFields:{},attendance:[]}}
 
 function listOf(s,key=listKey){
   if(key==='main')return s;
@@ -569,6 +737,18 @@ function load(){
   const valid=new Set(all.map(p=>p.id));
   for(const id of Object.keys(s.bottomTypes)) if(!valid.has(id)) delete s.bottomTypes[id];
   for(const p of all) if(!CATS.includes(s.bottomTypes[p.id])) s.bottomTypes[p.id]='friend';
+
+  // Stage 2 migration: everyone gains an empty field set. Nothing is moved out
+  // of 备注 — the free text stays exactly as written.
+  if(!s.personFields||typeof s.personFields!=='object') s.personFields={};
+  for(const id of Object.keys(s.personFields)) if(!valid.has(id)) delete s.personFields[id];
+  if(!Array.isArray(s.attendance)) s.attendance=[];
+  s.attendance=s.attendance.filter(r=>r&&r.date).map(r=>({
+    id:r.id||('m_'+Math.random().toString(36).slice(2,10)),
+    date:String(r.date),
+    label:r.label||'主日聚会',
+    present:(Array.isArray(r.present)?r.present:[]).filter(id=>valid.has(id))
+  })).sort((a,b)=>b.date.localeCompare(a.date));
 
   // repair: column order matches actual statuses
   const fix=(data)=>{
@@ -635,6 +815,9 @@ function removePerson(id,key){
 }
 
 function moveCard(id,status,beforeId){
+  // While a sort is applied the screen order isn't the stored order, so an
+  // insertion point read off the screen would scramble it. Append instead.
+  if(sortMode!=='manual') beforeId=null;
   const s=load(), d=listOf(s);
   if(!d.people.some(p=>p.id===id)) return;
   for(const st of ST) d.order[st]=d.order[st].filter(x=>x!==id);
@@ -655,8 +838,68 @@ function moveTag(id,cat,beforeId){
   save(s); paint();
 }
 
+/* ── filtering & sorting ───────────────────────────────── */
+// Search covers the name, the note, and every field value.
+function textMatch(s,id,p,note){
+  if(!query) return true;
+  const f=fieldsOf(s,id);
+  const hay=[(p.name||''),(note||''),...FIELD_KEYS.map(k=>f[k]||'')].join(' ').toLowerCase();
+  return hay.includes(query);
+}
+const filtering=()=>!!(query||filterCat||filterNote||filterSchool||filterPlace||filterBap||filterAbsent);
+
+const monthsAgo=n=>{ const d=new Date(); d.setMonth(d.getMonth()-n); return d.toISOString().slice(0,10); };
+
+// filterCat is skipped in the group view, where the columns *are* the categories.
+function passes(s,id,p,note,useCat){
+  if(useCat&&filterCat&&(s.bottomTypes[id]||'friend')!==filterCat) return false;
+  if(filterNote&&!note) return false;
+  const f=fieldsOf(s,id);
+  if(filterSchool&&(f.school||'')!==filterSchool) return false;
+  if(filterPlace&&(f.place||'')!==filterPlace) return false;
+  if(filterBap==='yes'&&!f.baptized) return false;
+  if(filterBap==='no'&&f.baptized) return false;
+  if(filterBap==='new'&&!(f.baptized&&f.baptized>=monthsAgo(3))) return false;
+  if(filterAbsent){
+    const seen=longAbsent(s);
+    if(!seen||seen.has(id)) return false;
+  }
+  return textMatch(s,id,p,note);
+}
+
+// keep the 学校 / 住处 dropdowns in step with the values actually in use
+function syncFieldFilters(s){
+  for(const [sel,key,cur] of [['#fSchool','school',filterSchool],['#fPlace','place',filterPlace]]){
+    const el=$(sel), vals=usedValues(s,key);
+    const want=JSON.stringify(vals);
+    if(el.dataset.vals===want){ el.value=cur; continue; }
+    el.dataset.vals=want;
+    el.innerHTML='<option value="">全部</option>';
+    for(const v of vals){
+      const o=document.createElement('option'); o.value=v; o.textContent=v; el.appendChild(o);
+    }
+    el.value=vals.includes(cur)?cur:'';
+  }
+}
+
+function sortIds(ids,id2p,addedIdx){
+  if(sortMode==='name')
+    return ids.slice().sort((a,b)=>(id2p[a].name||'').localeCompare(id2p[b].name||'','zh-Hans-CN'));
+  if(sortMode==='added')
+    return ids.slice().sort((a,b)=>(addedIdx[b]||0)-(addedIdx[a]||0));
+  return ids;
+}
+
+function paintFilterInfo(total,shown){
+  const bits=[];
+  if(filtering()) bits.push('显示 '+shown+' / '+total+' 人');
+  if(sortMode!=='manual')
+    bits.push((sortMode==='name'?'按姓名排序':'按添加时间排序')+' · 拖动仍可改变状态');
+  $('#filterInfo').textContent=bits.join('　·　');
+  $('#fClear').hidden=!filtering()&&sortMode==='manual';
+}
+
 /* ── render ────────────────────────────────────────────── */
-const matches=(p,note)=>!query||((p.name||'')+' '+(note||'')).toLowerCase().includes(query);
 
 function paint(){
   const s=load();
@@ -665,34 +908,40 @@ function paint(){
   $('#newName').placeholder = listKey==='fall2026'?'添加到开学季…':'输入姓名…';
   $('#boardView').classList.toggle('on', view==='board'||view==='fall2026');
   $('#groupView').classList.toggle('on', view==='group');
+  $('#attendView').classList.toggle('on', view==='attend');
   $('#noticeView').classList.toggle('on', view==='notice');
   if(view==='board'||view==='fall2026') paintBoard(s);
   if(view==='group') paintGroup(s);
+  if(view==='attend') paintAttend(s);
   if(view==='notice') paintNotices(s);
 }
 
 function paintBoard(s){
   const d=listOf(s), wrap=$('#columns'), notes=d.personNotes||{};
-  const id2p={}; for(const p of d.people) id2p[p.id]=p;
+  const id2p={}, addedIdx={};
+  d.people.forEach((p,i)=>{ id2p[p.id]=p; addedIdx[p.id]=i; });
+  syncFieldFilters(s);
   wrap.innerHTML='';
-  const counts={};
+  const counts={}; let shownTotal=0;
   for(const st of ST){
     const ids=d.order[st].filter(id=>id2p[id]);
-    const shown=ids.filter(id=>matches(id2p[id],notes[id]));
-    counts[st]=ids.length;
+    const shown=sortIds(ids.filter(id=>passes(s,id,id2p[id],notes[id],true)),id2p,addedIdx);
+    counts[st]=ids.length; shownTotal+=shown.length;
     const col=document.createElement('section');
     col.className='col'; col.dataset.status=st;
     col.innerHTML=`<div class="col-head"><span class="stripe"></span><h3>${ST_LABEL[st]}</h3>
-      <span class="n tnum">${query?shown.length+'/'+ids.length:ids.length}</span></div>
+      <span class="n tnum">${filtering()?shown.length+'/'+ids.length:ids.length}</span></div>
       <div class="drop" data-status="${st}"></div>`;
     const drop=col.querySelector('.drop');
     if(!shown.length){
       const e=document.createElement('p'); e.className='empty';
-      e.textContent=query?'没有匹配的姓名':'把姓名拖到这里';
+      e.textContent=filtering()?'没有匹配的姓名':'把姓名拖到这里';
       drop.appendChild(e);
     } else for(const id of shown) drop.appendChild(cardEl(id2p[id],!!notes[id]));
     wrap.appendChild(col);
   }
+  paintFilterInfo(d.people.length,shownTotal);
+  paintSelBar();
   const total=d.people.length;
   $('#mTotal').textContent=total;
   const bar=$('#mBar'), leg=$('#mLegend');
@@ -712,12 +961,17 @@ function paintBoard(s){
 
 function cardEl(p,hasNote){
   const el=document.createElement('article');
-  el.className='card'; el.dataset.id=p.id;
-  el.innerHTML=`<button class="grip" data-act="drag" aria-label="拖动 ${esc(p.name)}" tabindex="-1">⋮⋮</button>
-    <button class="card-name" data-act="detail">${esc(p.name)}</button>
-    ${hasNote?'<span class="notemark" title="有备注"></span>':''}
-    <button class="mini" data-act="move" aria-label="移动 ${esc(p.name)}"><svg viewBox="0 0 24 24"><path d="M4 8h13m0 0-3-3m3 3-3 3M20 16H7m0 0 3-3m-3 3 3 3"/></svg></button>
-    <button class="mini" data-act="edit" aria-label="编辑 ${esc(p.name)}"><svg viewBox="0 0 24 24"><path d="M4 20h4l10-10a2.8 2.8 0 0 0-4-4L4 16v4Z"/></svg></button>`;
+  el.className='card'+(selectMode&&selected.has(p.id)?' picked':'');
+  el.dataset.id=p.id;
+  const lead=selectMode
+    ? `<input type="checkbox" class="pick" data-act="pick" ${selected.has(p.id)?'checked':''} aria-label="选择 ${esc(p.name)}">`
+    : `<button class="grip" data-act="drag" aria-label="拖动 ${esc(p.name)}" tabindex="-1">⋮⋮</button>`;
+  const tail=selectMode ? '' :
+    `<button class="mini" data-act="move" aria-label="移动 ${esc(p.name)}"><svg viewBox="0 0 24 24"><path d="M4 8h13m0 0-3-3m3 3-3 3M20 16H7m0 0 3-3m-3 3 3 3"/></svg></button>
+     <button class="mini" data-act="edit" aria-label="编辑 ${esc(p.name)}"><svg viewBox="0 0 24 24"><path d="M4 20h4l10-10a2.8 2.8 0 0 0-4-4L4 16v4Z"/></svg></button>`;
+  el.innerHTML=lead+
+    `<button class="card-name" data-act="detail">${esc(p.name)}</button>`+
+    (hasNote?'<span class="notemark" title="有备注"></span>':'')+tail;
   return el;
 }
 
@@ -726,18 +980,20 @@ function paintGroup(s){
   const fallIds=new Set(fall.people.map(p=>p.id));
   const id2p={}; for(const p of s.people.concat(fall.people)) id2p[p.id]=p;
   const notes=Object.assign({},s.personNotes,fall.personNotes);
+  const addedIdx={}; s.people.concat(fall.people).forEach((p,i)=>{ addedIdx[p.id]=i; });
+  const narrowed=filtering();
   const wrap=$('#gcols'); wrap.innerHTML='';
   for(const c of CATS){
     const ids=s.bottomOrder[c].filter(id=>id2p[id]);
-    const shown=ids.filter(id=>matches(id2p[id],notes[id]));
+    const shown=sortIds(ids.filter(id=>passes(s,id,id2p[id],notes[id],false)),id2p,addedIdx);
     const col=document.createElement('div');
     col.className='gcol'; col.dataset.cat=c;
-    col.innerHTML=`<h4>${CAT_LABEL[c]}<span class="n tnum">${query?shown.length+'/'+ids.length:ids.length}</span></h4>
+    col.innerHTML=`<h4>${CAT_LABEL[c]}<span class="n tnum">${narrowed?shown.length+'/'+ids.length:ids.length}</span></h4>
       <div class="gdrop" data-cat="${c}"></div>`;
     const drop=col.querySelector('.gdrop');
     if(!shown.length){
       const e=document.createElement('p'); e.className='empty';
-      e.textContent=query?'没有匹配的姓名':'把姓名拖到这里';
+      e.textContent=narrowed?'没有匹配的姓名':'把姓名拖到这里';
       drop.appendChild(e);
     } else for(const id of shown){
       const t=document.createElement('div');
@@ -836,6 +1092,7 @@ function endDrag(){
 let press=null;
 document.addEventListener('pointerdown',e=>{
   if(e.button!==undefined&&e.button!==0) return;
+  if(selectMode) return;                 // ticking boxes, not dragging
   const tag=e.target.closest('.tag');
   const card=e.target.closest('.card');
   const grip=e.target.closest('.grip');
@@ -867,6 +1124,244 @@ document.addEventListener('touchmove',e=>{ if(drag) e.preventDefault(); },{passi
   endDrag();
 }));
 
+/* ── attendance ────────────────────────────────────────── */
+const RECENT=4;                       // meetings considered for 久未出席
+
+function lastSunday(){
+  const d=new Date();
+  d.setDate(d.getDate()-d.getDay());  // 0 = Sunday
+  return d.toISOString().slice(0,10);
+}
+const meetingKey=(date,label)=>date+' '+(label||'主日聚会');
+function findMeeting(s,date,label){
+  return (s.attendance||[]).find(r=>meetingKey(r.date,r.label)===meetingKey(date,label));
+}
+// everyone on both lists, main first
+function allPeople(s){
+  const fall=s.campaigns.fall2026;
+  return s.people.map(p=>({p,fall:false})).concat(fall.people.map(p=>({p,fall:true})));
+}
+// ids absent from every one of the last RECENT meetings (and there must be some)
+function longAbsent(s){
+  const recent=(s.attendance||[]).slice(0,RECENT);
+  if(recent.length<RECENT) return null;
+  const seen=new Set();
+  for(const r of recent) for(const id of r.present) seen.add(id);
+  return seen;
+}
+
+function paintAttend(s){
+  const meets=s.attendance||[];
+  if(!$('#aDate').value) $('#aDate').value = meets[0]?meets[0].date : lastSunday();
+  if(!$('#aLabel').value) $('#aLabel').value = meets[0]?meets[0].label : '主日聚会';
+  const date=$('#aDate').value, label=($('#aLabel').value||'').trim()||'主日聚会';
+  const rec=findMeeting(s,date,label);
+  const present=new Set(rec?rec.present:[]);
+
+  const dl=$('#dl_meeting'); dl.innerHTML='';
+  for(const v of [...new Set(meets.map(r=>r.label))]){
+    const o=document.createElement('option'); o.value=v; dl.appendChild(o);
+  }
+
+  const box=$('#aPeople'); box.innerHTML='';
+  const people=allPeople(s);
+  for(const {p,fall} of people){
+    const row=document.createElement('label');
+    row.className='att'+(present.has(p.id)?' on':'');
+    row.innerHTML=`<input type="checkbox" data-id="${p.id}" ${present.has(p.id)?'checked':''}>
+      <span class="who">${esc(p.name)}</span>${fall?'<span class="from">FALL</span>':''}`;
+    box.appendChild(row);
+  }
+  $('#aInfo').textContent = people.length
+    ? '出席 '+present.size+' / '+people.length+' 人'
+    : '名单还是空的';
+  $('#aDelete').hidden=!rec;
+
+  const past=$('#aPast'); past.innerHTML='';
+  if(!meets.length){ past.innerHTML='<p class="empty">还没有记录任何聚会。</p>'; return; }
+  for(const r of meets.slice(0,20)){
+    const row=document.createElement('div');
+    row.className='past-row'+(meetingKey(r.date,r.label)===meetingKey(date,label)?' cur':'');
+    row.dataset.date=r.date; row.dataset.label=r.label;
+    row.innerHTML=`<time>${esc(r.date)}</time><span class="lbl">${esc(r.label)}</span>
+      <span class="cnt">${r.present.length} 人</span>`;
+    past.appendChild(row);
+  }
+}
+
+function setPresent(id,on){
+  const s=load();
+  const date=$('#aDate').value, label=($('#aLabel').value||'').trim()||'主日聚会';
+  if(!date) return;
+  s.attendance=s.attendance||[];
+  let rec=findMeeting(s,date,label);
+  if(!rec){
+    rec={id:'m_'+Math.random().toString(36).slice(2,10),date,label,present:[]};
+    s.attendance.push(rec);
+  }
+  rec.present=rec.present.filter(x=>x!==id);
+  if(on) rec.present.push(id);
+  s.attendance=s.attendance.filter(r=>r.present.length||r===rec);
+  s.attendance.sort((a,b)=>b.date.localeCompare(a.date));
+  save(s); paint();
+}
+
+function renderAttendStrip(s,id){
+  const box=$('#dlgAttend');
+  const meets=(s.attendance||[]).slice(0,8);
+  if(!meets.length){ box.hidden=true; return; }
+  box.hidden=false;
+  const dots=meets.slice().reverse().map(r=>{
+    const on=r.present.includes(id);
+    return `<span><i class="${on?'on':''}" title="${esc(r.label)}"></i>${esc(r.date.slice(5))}</span>`;
+  }).join('');
+  const count=meets.filter(r=>r.present.includes(id)).length;
+  box.innerHTML=`<h3>最近出席　${count} / ${meets.length}</h3><div class="attend-dots">${dots}</div>`;
+}
+
+$('#aDate').addEventListener('change',paint);
+$('#aLabel').addEventListener('change',paint);
+$('#aPeople').addEventListener('change',e=>{
+  const box=e.target.closest('input[data-id]'); if(!box) return;
+  setPresent(box.dataset.id,box.checked);
+});
+$('#aPast').addEventListener('click',e=>{
+  const row=e.target.closest('.past-row'); if(!row) return;
+  $('#aDate').value=row.dataset.date; $('#aLabel').value=row.dataset.label;
+  paint();
+});
+$('#aClear').addEventListener('click',()=>{
+  const s=load();
+  const date=$('#aDate').value, label=($('#aLabel').value||'').trim()||'主日聚会';
+  const rec=findMeeting(s,date,label);
+  if(!rec||!rec.present.length) return;
+  const snap=localStorage.getItem(KEY);
+  rec.present=[];
+  save(s); paint();
+  toast('已取消这次记录的所有出席',()=>{ localStorage.setItem(KEY,snap); paint(); });
+});
+$('#aDelete').addEventListener('click',async()=>{
+  const s=load();
+  const date=$('#aDate').value, label=($('#aLabel').value||'').trim()||'主日聚会';
+  const rec=findMeeting(s,date,label);
+  if(!rec) return;
+  if(!await ask({title:'删除这次聚会记录？',message:date+' '+label+' · '+rec.present.length+' 人',
+    confirmLabel:'删除',danger:true})) return;
+  const snap=localStorage.getItem(KEY);
+  const s2=load();
+  s2.attendance=s2.attendance.filter(r=>meetingKey(r.date,r.label)!==meetingKey(date,label));
+  save(s2); paint();
+  toast('记录已删除',()=>{ localStorage.setItem(KEY,snap); paint(); });
+});
+
+/* ── multi-select & bulk actions ───────────────────────── */
+function paintSelBar(){
+  const bar=$('#selBar');
+  bar.hidden=!selectMode;
+  $('#selToggle').textContent=selectMode?'退出选择':'选择';
+  $('#selToggle').setAttribute('aria-pressed',String(selectMode));
+  if(!selectMode) return;
+  const n=selected.size;
+  $('#selCount').textContent='已选 '+n+' 人';
+  $$('#selBar button[data-bulk], #selDel').forEach(b=>{ b.disabled=!n; });
+}
+
+function setSelectMode(on){
+  selectMode=on;
+  if(!on) selected.clear();
+  paint();
+}
+function clearSel(){ selected.clear(); paintSelBar(); }
+
+// ids currently on screen, in the order they appear
+const visibleIds=()=>$$('#columns .card').map(c=>c.dataset.id);
+
+function bulkStatus(st){
+  if(!selected.size) return;
+  const snap=localStorage.getItem(KEY);
+  const s=load(), d=listOf(s);
+  const ids=[...selected].filter(id=>d.people.some(p=>p.id===id));
+  if(!ids.length) return;
+  for(const id of ids){
+    for(const k of ST) d.order[k]=d.order[k].filter(x=>x!==id);
+    d.statuses[id]=st;
+    d.order[st].push(id);
+  }
+  save(s); clearSel(); paint();
+  toast('已把 '+ids.length+' 人移到「'+ST_LABEL[st]+'」',()=>{ localStorage.setItem(KEY,snap); paint(); });
+}
+
+function bulkCat(cat){
+  if(!selected.size) return;
+  const snap=localStorage.getItem(KEY);
+  const s=load();
+  const ids=[...selected];
+  for(const id of ids){
+    for(const c of CATS) s.bottomOrder[c]=s.bottomOrder[c].filter(x=>x!==id);
+    s.bottomTypes[id]=cat;
+    s.bottomOrder[cat].push(id);
+  }
+  save(s); clearSel(); paint();
+  toast('已把 '+ids.length+' 人归为「'+CAT_LABEL[cat]+'」',()=>{ localStorage.setItem(KEY,snap); paint(); });
+}
+
+async function bulkDelete(){
+  if(!selected.size) return;
+  const n=selected.size;
+  if(!await ask({title:'删除选中的 '+n+' 人？',message:'连同备注与分组一起移除。删除后可以撤销。',
+    confirmLabel:'删除',danger:true})) return;
+  const snap=localStorage.getItem(KEY);
+  const s=load(), d=listOf(s), key=listKey;
+  const ids=[...selected];
+  s.deletedPeople[key]=s.deletedPeople[key]||[];
+  for(const id of ids){
+    if(!s.deletedPeople[key].includes(id)) s.deletedPeople[key].push(id);
+    d.people=d.people.filter(p=>p.id!==id);
+    delete d.statuses[id]; delete d.personNotes[id];
+    for(const st of ST) d.order[st]=d.order[st].filter(x=>x!==id);
+    delete s.bottomTypes[id];
+    for(const c of CATS) s.bottomOrder[c]=s.bottomOrder[c].filter(x=>x!==id);
+  }
+  save(s); clearSel(); paint();
+  toast('已删除 '+ids.length+' 人',()=>{ localStorage.setItem(KEY,snap); paint(); });
+}
+
+$('#selToggle').addEventListener('click',()=>setSelectMode(!selectMode));
+$('#selDone').addEventListener('click',()=>setSelectMode(false));
+$('#selAll').addEventListener('click',()=>{ visibleIds().forEach(id=>selected.add(id)); paint(); });
+$('#selNone').addEventListener('click',()=>{ selected.clear(); paint(); });
+$('#selDel').addEventListener('click',bulkDelete);
+$('#selBar').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-bulk]'); if(!b) return;
+  if(b.dataset.bulk==='st') bulkStatus(b.dataset.v);
+  else bulkCat(b.dataset.v);
+});
+
+/* ── filter & sort controls ────────────────────────────── */
+$('#fCat').addEventListener('change',e=>{ filterCat=e.target.value; paint(); });
+$('#fSort').addEventListener('change',e=>{ sortMode=e.target.value; paint(); });
+$('#fNote').addEventListener('change',e=>{ filterNote=e.target.checked; paint(); });
+$('#fSchool').addEventListener('change',e=>{ filterSchool=e.target.value; paint(); });
+$('#fPlace').addEventListener('change',e=>{ filterPlace=e.target.value; paint(); });
+$('#fBap').addEventListener('change',e=>{ filterBap=e.target.value; paint(); });
+$('#fAbsent').addEventListener('change',e=>{
+  filterAbsent=e.target.checked;
+  if(filterAbsent&&!longAbsent(load())){
+    filterAbsent=false; e.target.checked=false;
+    toast('先记录至少 '+RECENT+' 次聚会，才能看出谁久未出席');
+  }
+  paint();
+});
+$('#fClear').addEventListener('click',()=>{
+  filterCat=''; filterNote=false; sortMode='manual'; query='';
+  filterSchool=''; filterPlace=''; filterBap=''; filterAbsent=false;
+  $('#fCat').value=''; $('#fNote').checked=false; $('#fSort').value='manual';
+  $('#fSchool').value=''; $('#fPlace').value=''; $('#fBap').value='';
+  $('#fAbsent').checked=false;
+  $('#searchInput').value=''; $('#searchClear').hidden=true;
+  paint();
+});
+
 /* ── quick move menu ───────────────────────────────────── */
 let menu=null;
 function closeMenu(){ if(menu){menu.remove();menu=null;} }
@@ -893,9 +1388,20 @@ addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu(); });
 /* ── click routing ─────────────────────────────────────── */
 $('#columns').addEventListener('click',e=>{
   if(suppressClick) return;
-  const btn=e.target.closest('button[data-act]'); if(!btn) return;
+  const btn=e.target.closest('[data-act]'); if(!btn) return;
   const card=btn.closest('.card'), id=card.dataset.id;
   const act=btn.dataset.act;
+  if(act==='pick'){
+    if(btn.checked) selected.add(id); else selected.delete(id);
+    card.classList.toggle('picked',btn.checked);
+    paintSelBar();
+    return;
+  }
+  if(selectMode&&act==='detail'){        // in select mode the whole card is a target
+    const box=card.querySelector('.pick');
+    if(box){ box.checked=!box.checked; box.dispatchEvent(new Event('click',{bubbles:true})); }
+    return;
+  }
   if(act==='detail') openPerson(id,true);
   if(act==='edit') openPerson(id,false);
   if(act==='move'){
@@ -932,18 +1438,67 @@ $('#notes').addEventListener('click',async e=>{
   save(s); paint();
 });
 
+/* ── person fields ─────────────────────────────────────── */
+const fieldsOf=(s,id)=>(s.personFields&&s.personFields[id])||{};
+
+// every distinct value already used for a field, for the suggestion lists
+function usedValues(s,key){
+  const seen=new Set();
+  for(const v of Object.values(s.personFields||{})){
+    const t=(v&&v[key]||'').trim();
+    if(t) seen.add(t);
+  }
+  return [...seen].sort((a,b)=>a.localeCompare(b,'zh-Hans-CN'));
+}
+
+function renderFieldInputs(s,id,readOnly){
+  const box=$('#dlgFields'), vals=fieldsOf(s,id);
+  box.innerHTML='';
+  for(const f of FIELDS){
+    const wrap=document.createElement('div');
+    if(f.key==='contact') wrap.className='wide';
+    const listId=f.list?('dl_'+f.key):null;
+    wrap.innerHTML=`<label for="fld_${f.key}">${f.label}</label>
+      <input id="fld_${f.key}" type="${f.type}" autocomplete="off"
+        ${listId?`list="${listId}"`:''} ${readOnly?'readonly tabindex="-1"':''}>
+      ${listId?`<datalist id="${listId}"></datalist>`:''}`;
+    box.appendChild(wrap);
+    wrap.querySelector('input').value=vals[f.key]||'';
+    if(listId){
+      const dl=wrap.querySelector('datalist');
+      for(const v of usedValues(s,f.key)){
+        const o=document.createElement('option'); o.value=v; dl.appendChild(o);
+      }
+    }
+  }
+}
+
+function readFieldInputs(){
+  const out={};
+  for(const f of FIELDS){
+    const v=($('#fld_'+f.key)?.value||'').trim();
+    if(v) out[f.key]=v;
+  }
+  return out;
+}
+
 /* ── person dialog ─────────────────────────────────────── */
 function openPerson(id,readOnly){
   const s=load(), d=listOf(s), p=d.people.find(x=>x.id===id);
   if(!p) return;
   editingId=id; editingList=listKey;
   const dlg=$('#personDlg');
+  const f=fieldsOf(s,id);
+  const sub=[ST_LABEL[d.statuses[id]||'pool'],CAT_LABEL[s.bottomTypes[id]||'friend']];
+  if(f.baptized) sub.push('受浸 '+f.baptized);
   $('#dlgTitle').textContent=readOnly?p.name:'编辑资料';
-  $('#dlgSub').textContent=readOnly?ST_LABEL[d.statuses[id]||'pool']+' · '+CAT_LABEL[s.bottomTypes[id]||'friend']:'修改姓名与备注';
+  $('#dlgSub').textContent=readOnly?sub.join(' · '):'修改姓名、资料与备注';
   $('#dlgName').value=p.name||'';
   $('#dlgNote').value=(d.personNotes||{})[id]||'';
   $('#dlgNote').placeholder=readOnly?'暂无备注':'记录联系方式、邀请进度或其他信息…';
   $('#dlgName').readOnly=readOnly; $('#dlgNote').readOnly=readOnly;
+  renderFieldInputs(s,id,readOnly);
+  renderAttendStrip(s,id);
   $('#dlgSave').hidden=readOnly; $('#dlgDelete').hidden=readOnly;
   $('#dlgCancel').textContent=readOnly?'关闭':'取消';
   dlg.returnValue='';
@@ -963,17 +1518,39 @@ $('#dlgDelete').addEventListener('click',async()=>{
   toast('已删除「'+name+'」',()=>{ localStorage.setItem(KEY,snapshot); paint();
     if(autoSync&&cloudOn) save(load()); });
 });
-$('#personDlg').addEventListener('close',()=>{
+$('#personDlg').addEventListener('close',async()=>{
   const dlg=$('#personDlg');
   if(dlg.returnValue!=='save'||!editingId){ editingId=null; return; }
-  const s=load(), d=listOf(s,editingList), p=d.people.find(x=>x.id===editingId);
+  const id=editingId; editingId=null;
+  const s=load(), d=listOf(s,editingList), p=d.people.find(x=>x.id===id);
   const nm=clean($('#dlgName').value);
   if(p&&nm) p.name=nm;
   d.personNotes=d.personNotes||{};
   const note=$('#dlgNote').value.trim();
-  if(note) d.personNotes[editingId]=note; else delete d.personNotes[editingId];
-  editingId=null;
+  if(note) d.personNotes[id]=note; else delete d.personNotes[id];
+
+  s.personFields=s.personFields||{};
+  const wasBaptized=!!(s.personFields[id]||{}).baptized;
+  const fields=readFieldInputs();
+  if(Object.keys(fields).length) s.personFields[id]=fields;
+  else delete s.personFields[id];
+
   save(s); paint();
+
+  // Baptism is the step that makes someone 弟兄姊妹 — offer to keep the two in step.
+  const nowBaptized=!!fields.baptized;
+  if(nowBaptized&&!wasBaptized&&s.bottomTypes[id]!=='member'){
+    if(await ask({title:'移到「弟兄姊妹」？',
+      message:(p?p.name:'这位')+' 已填入受浸日期 '+fields.baptized+'，是否一并更新身份分组？',
+      confirmLabel:'移过去',cancelLabel:'先不要'})){
+      const s2=load();
+      for(const c of CATS) s2.bottomOrder[c]=s2.bottomOrder[c].filter(x=>x!==id);
+      s2.bottomTypes[id]='member';
+      s2.bottomOrder.member.unshift(id);
+      save(s2); paint();
+      toast('已移到「弟兄姊妹」');
+    }
+  }
 });
 
 /* ── ask: in-page confirm / prompt ─────────────────────
@@ -1047,6 +1624,7 @@ $('#railToggle').addEventListener('click',e=>{
 $$('.tab').forEach(tab=>tab.addEventListener('click',()=>{
   view=tab.dataset.target;
   listKey=view==='fall2026'?'fall2026':'main';
+  selected.clear();                      // a selection never spans two lists
   $$('.tab').forEach(t=>t.setAttribute('aria-selected',String(t===tab)));
   paint();
 }));
